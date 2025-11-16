@@ -126,61 +126,78 @@ A developer needs to use Material UI (MUI) components to build consistent user i
 - **FR-012**: Build system MUST compile TypeScript code for frontend packages
 - **FR-013**: Build system MUST compile Go code for backend packages
 - **FR-014**: Development environment MUST support hot-reload for both Angular and Gin servers
+- **FR-015-NEW**: Project MUST use PNPM catalog in `pnpm-workspace.yaml` for centralized dependency version management to ensure consistent versions across all packages
+- **FR-016-NEW**: Monorepo MUST use Nx or Turbo for build orchestration to enable efficient parallel builds and caching
 
 #### Frontend Infrastructure
-- **FR-015**: Frontend packages MUST use Angular framework with TypeScript
-- **FR-016**: Frontend packages MUST integrate Angular Material (Material Design components for Angular) for component library
-- **FR-017**: Frontend MUST support responsive design patterns
-- **FR-018**: Frontend build system MUST produce optimized production bundles
+- **FR-017**: Frontend packages MUST use Angular framework with TypeScript
+- **FR-018**: Frontend packages MUST integrate Angular Material (Material Design components for Angular) for component library
+- **FR-019**: Frontend MUST support responsive design patterns
+- **FR-020**: Frontend build system MUST produce optimized production bundles
+- **FR-021-NEW**: Repository MUST include a shared Angular component library package (e.g., `universo-ng-components`) for common UI components extracted from feature packages to eliminate duplication
+- **FR-022-NEW**: Shared component library MUST follow Angular library best practices with proper module exports and be published as an internal workspace package
 
 #### Backend Infrastructure
-- **FR-019**: Backend packages MUST use Gin framework with Go
-- **FR-020**: Backend MUST implement RESTful API patterns for frontend communication
-- **FR-021**: Backend MUST handle CORS configuration for development and production environments
-- **FR-022**: Backend MUST include error handling and logging mechanisms
+- **FR-023**: Backend packages MUST use Gin framework with Go
+- **FR-024**: Backend MUST implement RESTful API patterns for frontend communication
+- **FR-025**: Backend MUST handle CORS configuration for development and production environments
+- **FR-026**: Backend MUST include error handling and logging mechanisms
 
 #### Database & Authentication
-- **FR-023**: Project MUST integrate with Supabase as the primary database provider
-- **FR-024**: Backend MUST implement Passport.js for authentication middleware
-- **FR-025**: Authentication MUST support Supabase authentication connector
-- **FR-026**: Data access layer MUST implement an abstraction pattern (repository pattern or similar) that isolates database-specific code, with Supabase implementation behind clearly-defined interfaces to enable future addition of other database providers without modifying feature code
-- **FR-027**: Database connection configuration MUST support environment-specific settings
+- **FR-027**: Project MUST integrate with Supabase as the primary database provider
+- **FR-028**: Backend MUST implement Passport.js for authentication middleware (or equivalent Go authentication middleware with Supabase support)
+- **FR-029**: Authentication MUST support Supabase authentication connector
+- **FR-030**: Data access layer MUST implement an abstraction pattern (repository pattern or similar) that isolates database-specific code, with Supabase implementation behind clearly-defined interfaces to enable future addition of other database providers without modifying feature code
+- **FR-031**: Database connection configuration MUST support environment-specific settings
+- **FR-032-NEW**: Repository MUST include separate authentication packages: `auth-frt` (Angular authentication UI primitives with login forms, session guards, and auth hooks) and `auth-srv` (Go authentication backend with session management and JWT token handling)
+- **FR-033-NEW**: Authentication architecture MUST support session-based authentication with JWT tokens, integrating with Supabase authentication service
 
 #### Documentation & Developer Experience
-- **FR-028**: Each package MUST include its own README file explaining its purpose and usage
-- **FR-029**: Root README MUST explain overall project architecture and reference universo-platformo-react as the conceptual basis
-- **FR-030**: Documentation MUST clarify that this implementation adapts concepts from universo-platformo-react to Angular/Gin stack
-- **FR-031**: Setup instructions MUST include prerequisites for Node.js, Go, and PNPM
-- **FR-032**: Repository MUST include example package templates for consistent scaffolding
+- **FR-034**: Each package MUST include its own README file explaining its purpose and usage
+- **FR-035**: Root README MUST explain overall project architecture and reference universo-platformo-react as the conceptual basis
+- **FR-036**: Documentation MUST clarify that this implementation adapts concepts from universo-platformo-react to Angular/Gin stack
+- **FR-037**: Setup instructions MUST include prerequisites for Node.js, Go, and PNPM
+- **FR-038**: Repository MUST include example package templates for consistent scaffolding
+- **FR-039-NEW**: Repository MUST provide standardized README templates (`TEMPLATE-README.md` and `TEMPLATE-README-GUIDE.md`) in the `packages/` directory for consistent package documentation
+- **FR-040-NEW**: Each package README MUST follow the template structure including sections: Overview, Features, Installation, Usage, API Reference, Development, and Contributing
+
+#### Shared Infrastructure Packages
+- **FR-041-NEW**: Repository MUST include a `universo-types` package containing all shared TypeScript type definitions and interfaces used across the platform
+- **FR-042-NEW**: Repository MUST include a `universo-utils` package containing shared utility functions and processors used across multiple applications
+- **FR-043-NEW**: Repository MUST include a `universo-api-client` package providing TypeScript/Go API client libraries for backend services with type-safe interfaces
+- **FR-044-NEW**: Repository MUST include a `universo-i18n` package providing centralized internationalization configuration and translation management for both Angular (ngx-translate) and Go applications
+- **FR-045-NEW**: Repository MUST include a `universo-rest-docs` package providing API documentation server using OpenAPI/Swagger specifications auto-generated from code
+- **FR-046-NEW**: All shared infrastructure packages MUST be built and published as internal workspace packages before feature packages that depend on them
+- **FR-047-NEW**: Shared infrastructure packages MUST follow semantic versioning and maintain stable APIs to minimize breaking changes across dependent packages
 
 #### Repository Synchronization & Workflow
-- **FR-033**: Team MUST periodically monitor universo-platformo-react repository for new features and architectural concepts
-- **FR-034**: New features from universo-platformo-react MUST be evaluated for implementation in this Angular/Gin stack
-- **FR-035**: Implementation MUST adapt React concepts to Angular/Gin best practices rather than direct code translation
-- **FR-036**: Repository MUST document workflow for creating Issues before implementing specifications according to .github/instructions/github-issues.md
+- **FR-048**: Team MUST periodically monitor universo-platformo-react repository for new features and architectural concepts
+- **FR-049**: New features from universo-platformo-react MUST be evaluated for implementation in this Angular/Gin stack
+- **FR-050**: Implementation MUST adapt React concepts to Angular/Gin best practices rather than direct code translation
+- **FR-051**: Repository MUST document workflow for creating Issues before implementing specifications according to .github/instructions/github-issues.md
 
 #### Explicit Exclusions
-- **FR-037**: Repository MUST NOT include a `docs/` folder (documentation will be hosted in a separate repository)
-- **FR-038**: Repository MUST NOT include AI agent rules folders or files (user will create these manually if needed)
-- **FR-039**: Repository MUST NOT replicate legacy Flowise code from universo-platformo-react
-- **FR-040**: Repository MUST NOT copy poor implementations or technical debt from universo-platformo-react
+- **FR-052**: Repository MUST NOT include a `docs/` folder (documentation will be hosted in a separate repository)
+- **FR-053**: Repository MUST NOT include AI agent rules folders or files (user will create these manually if needed)
+- **FR-054**: Repository MUST NOT replicate legacy Flowise code from universo-platformo-react
+- **FR-055**: Repository MUST NOT copy poor implementations or technical debt from universo-platformo-react
 
 #### Package Architecture Patterns
-- **FR-041**: Repository MUST establish a three-entity hierarchical pattern as the base architecture for features (e.g., Clusters/Domains/Resources, Metaverses/Sections/Entities)
-- **FR-042**: Package implementation MUST support replication of this pattern across different feature domains with consistent structure
-- **FR-043**: Base functionality common to all three-entity patterns MUST be abstracted for reuse across features
-- **FR-044**: Packages MUST allow extension of the base three-entity pattern with feature-specific additions (e.g., Uniks with more entities, Spaces/Canvases with node systems)
+- **FR-056**: Repository MUST establish a three-entity hierarchical pattern as the base architecture for features (e.g., Clusters/Domains/Resources, Metaverses/Sections/Entities)
+- **FR-057**: Package implementation MUST support replication of this pattern across different feature domains with consistent structure
+- **FR-058**: Base functionality common to all three-entity patterns MUST be abstracted for reuse across features
+- **FR-059**: Packages MUST allow extension of the base three-entity pattern with feature-specific additions (e.g., Uniks with more entities, Spaces/Canvases with node systems)
 
 #### Future Extensibility
-- **FR-045**: Packages MUST be designed with loose coupling to support eventual extraction to separate repositories
-- **FR-046**: Base packages (core frontend launcher and loader) MUST remain in monorepo when other packages are separated
-- **FR-047**: Package interfaces MUST be stable and well-defined to support independent versioning after separation
-- **FR-048**: Inter-package dependencies MUST use explicit version constraints compatible with future separate repositories
+- **FR-060**: Packages MUST be designed with loose coupling to support eventual extraction to separate repositories
+- **FR-061**: Base packages (core frontend launcher and loader) MUST remain in monorepo when other packages are separated
+- **FR-062**: Package interfaces MUST be stable and well-defined to support independent versioning after separation
+- **FR-063**: Inter-package dependencies MUST use explicit version constraints compatible with future separate repositories
 
 #### Feature Development Roadmap
-- **FR-049**: Repository initialization MUST prepare for incremental feature development following this sequence: (1) Base infrastructure, (2) First complete feature (Clusters), (3) Pattern replication (Metaverses, Uniks), (4) Advanced features (Spaces/Canvases with LangChain/UPDL nodes)
-- **FR-050**: First feature implementation (Clusters) MUST serve as the reference pattern for all subsequent features
-- **FR-051**: Documentation MUST explain the feature development progression and pattern replication strategy
+- **FR-064**: Repository initialization MUST prepare for incremental feature development following this sequence: (1) Shared infrastructure packages, (2) Base infrastructure (authentication, database, routing), (3) First complete feature (Clusters), (4) Pattern replication (Metaverses, Uniks), (5) Advanced features (Spaces/Canvases with specialized functionality)
+- **FR-065**: First feature implementation (Clusters) MUST serve as the reference pattern for all subsequent features
+- **FR-066**: Documentation MUST explain the feature development progression and pattern replication strategy
 
 ### Key Entities
 
