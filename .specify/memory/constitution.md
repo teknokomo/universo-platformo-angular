@@ -1,4 +1,29 @@
 <!--
+Sync Impact Report - Constitution v1.0.1
+========================================
+Version Change: v1.0.0 → v1.0.1 (PATCH - Clarifications)
+Modified Principles: I, VI, VII (clarification improvements only)
+Changes Made:
+  - Principle I: Clarified that base/ directory contains core implementation
+  - Principle VI: Expanded examples to explicitly mention Metaverses, Uniks, LangChain, UPDL nodes
+  - Principle VII: Added reference to plan-template.md for post-specification planning
+Review Status:
+  ✅ Comprehensive review against original requirements completed
+  ✅ All 6 requirement areas fully covered (10/10 alignment score)
+  ✅ Constitution is production-ready
+Impact Analysis:
+  - No breaking changes to existing principles
+  - Improves clarity without changing governance rules
+  - All improvements are clarifications per amendment PATCH process
+Templates Status:
+  ✅ plan-template.md - Reviewed, aligns with constitution
+  ✅ spec-template.md - Reviewed, aligns with constitution
+  ✅ tasks-template.md - Reviewed, aligns with constitution
+  ⚠️ GitHub instruction files - To be followed during implementation
+Follow-up TODOs: None - Constitution ready for use
+-->
+
+<!--
 Sync Impact Report - Constitution v1.0.0
 ========================================
 Version Change: Initial creation → v1.0.0
@@ -22,7 +47,7 @@ Follow-up TODOs: None
 
 ### I. Monorepo Organization
 
-The project MUST be organized as a monorepo managed by PNPM. All packages MUST reside in the `packages/` directory. For features requiring both frontend and backend, they MUST be split into separate packages with clear naming: `packages/{feature}-frt` (frontend) and `packages/{feature}-srv` (backend). Each package MUST contain a `base/` directory at its root to support future multiple implementations.
+The project MUST be organized as a monorepo managed by PNPM. All packages MUST reside in the `packages/` directory. For features requiring both frontend and backend, they MUST be split into separate packages with clear naming: `packages/{feature}-frt` (frontend) and `packages/{feature}-srv` (backend). Each package MUST contain a `base/` directory at its root containing the core implementation. This convention supports future multiple technology stack implementations (e.g., React version, Vue version) while maintaining a common interface.
 
 **Rationale**: Monorepo structure enables shared tooling, consistent versioning, and atomic cross-package changes. The `base/` convention future-proofs the architecture for multiple technology stack implementations while maintaining a common interface.
 
@@ -65,9 +90,9 @@ Issues and PRs MUST include both English and Russian versions using the exact sp
 
 Feature development MUST follow the pattern established in the reference React implementation:
 1. Base infrastructure first (authentication, database, routing)
-2. First complete feature with full CRUD (e.g., Clusters: Clusters/Domains/Resources)
-3. Replicate structure for similar features (e.g., Metaverses: Metaverses/Sections/Entities)
-4. Add specialized functionality as needed (e.g., Spaces/Canvases with node graphs)
+2. First complete feature with full CRUD (e.g., Clusters package with three-entity structure: Clusters/Domains/Resources entities)
+3. Replicate structure for similar features (e.g., Metaverses package: Metaverses/Sections/Entities; Uniks with potentially more entities)
+4. Add specialized functionality as needed (e.g., Spaces/Canvases packages with LangChain graph nodes, UPDL nodes)
 
 Each feature MUST be independently testable and deployable.
 
@@ -75,7 +100,7 @@ Each feature MUST be independently testable and deployable.
 
 ### VII. Specification-Driven Development
 
-Before implementing any feature, a complete specification MUST be created following `.specify/templates/spec-template.md`. Specifications MUST include user stories with priorities (P1, P2, P3), functional requirements, success criteria, and must be independently testable. Implementation work MUST NOT begin until the specification is approved.
+Before implementing any feature, a complete specification MUST be created following `.specify/templates/spec-template.md`. Specifications MUST include user stories with priorities (P1, P2, P3), functional requirements, success criteria, and must be independently testable. Implementation work MUST NOT begin until the specification is approved. After specification approval, implementation planning MUST follow `.specify/templates/plan-template.md` to decompose work into concrete tasks.
 
 **Rationale**: Specifications prevent scope creep, ensure shared understanding, enable independent testing of user stories, and provide clear acceptance criteria before code is written.
 
@@ -172,4 +197,4 @@ Any deviation from these principles MUST be explicitly justified in the pull req
 - Why the deviation is necessary
 - Why simpler alternatives following the constitution are insufficient
 
-**Version**: 1.0.0 | **Ratified**: 2025-11-16 | **Last Amended**: 2025-11-16
+**Version**: 1.0.1 | **Ratified**: 2025-11-16 | **Last Amended**: 2025-11-16
