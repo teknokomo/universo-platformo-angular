@@ -101,6 +101,9 @@ A developer needs to use Material UI (MUI) components to build consistent user i
 - What happens when bilingual documentation files fall out of sync (different line counts between English and Russian versions)?
 - How does Passport.js handle authentication when Supabase is temporarily unavailable?
 - What occurs when developers try to add database providers other than Supabase without proper abstraction?
+- How does the system handle features that require variations of the three-entity pattern (more or fewer entities)?
+- What happens when a package is created without a backend component (-srv), only frontend (-frt)?
+- How does the system support advanced features that extend beyond the base three-entity pattern (e.g., Spaces/Canvases with node systems)?
 
 ## Requirements *(mandatory)*
 
@@ -126,7 +129,7 @@ A developer needs to use Material UI (MUI) components to build consistent user i
 
 #### Frontend Infrastructure
 - **FR-015**: Frontend packages MUST use Angular framework with TypeScript
-- **FR-016**: Frontend packages MUST integrate Material UI (MUI) for component library
+- **FR-016**: Frontend packages MUST integrate Angular Material (Material Design components for Angular) for component library
 - **FR-017**: Frontend MUST support responsive design patterns
 - **FR-018**: Frontend build system MUST produce optimized production bundles
 
@@ -140,7 +143,7 @@ A developer needs to use Material UI (MUI) components to build consistent user i
 - **FR-023**: Project MUST integrate with Supabase as the primary database provider
 - **FR-024**: Backend MUST implement Passport.js for authentication middleware
 - **FR-025**: Authentication MUST support Supabase authentication connector
-- **FR-026**: Data access layer MUST be designed to potentially support additional database providers in the future
+- **FR-026**: Data access layer MUST implement an abstraction pattern (repository pattern or similar) that isolates database-specific code, with Supabase implementation behind clearly-defined interfaces to enable future addition of other database providers without modifying feature code
 - **FR-027**: Database connection configuration MUST support environment-specific settings
 
 #### Documentation & Developer Experience
@@ -162,6 +165,23 @@ A developer needs to use Material UI (MUI) components to build consistent user i
 - **FR-039**: Repository MUST NOT replicate legacy Flowise code from universo-platformo-react
 - **FR-040**: Repository MUST NOT copy poor implementations or technical debt from universo-platformo-react
 
+#### Package Architecture Patterns
+- **FR-041**: Repository MUST establish a three-entity hierarchical pattern as the base architecture for features (e.g., Clusters/Domains/Resources, Metaverses/Sections/Entities)
+- **FR-042**: Package implementation MUST support replication of this pattern across different feature domains with consistent structure
+- **FR-043**: Base functionality common to all three-entity patterns MUST be abstracted for reuse across features
+- **FR-044**: Packages MUST allow extension of the base three-entity pattern with feature-specific additions (e.g., Uniks with more entities, Spaces/Canvases with node systems)
+
+#### Future Extensibility
+- **FR-045**: Packages MUST be designed with loose coupling to support eventual extraction to separate repositories
+- **FR-046**: Base packages (core frontend launcher and loader) MUST remain in monorepo when other packages are separated
+- **FR-047**: Package interfaces MUST be stable and well-defined to support independent versioning after separation
+- **FR-048**: Inter-package dependencies MUST use explicit version constraints compatible with future separate repositories
+
+#### Feature Development Roadmap
+- **FR-049**: Repository initialization MUST prepare for incremental feature development following this sequence: (1) Base infrastructure, (2) First complete feature (Clusters), (3) Pattern replication (Metaverses, Uniks), (4) Advanced features (Spaces/Canvases with LangChain/UPDL nodes)
+- **FR-050**: First feature implementation (Clusters) MUST serve as the reference pattern for all subsequent features
+- **FR-051**: Documentation MUST explain the feature development progression and pattern replication strategy
+
 ### Key Entities
 
 - **Package**: A modular unit of functionality within the monorepo, typically split into frontend and backend components
@@ -169,6 +189,13 @@ A developer needs to use Material UI (MUI) components to build consistent user i
   - Has its own dependencies and build configuration
   - Follows naming convention (`*-frt` for frontend, `*-srv` for backend)
   - Examples: `clusters-frt`, `clusters-srv`, `metaverses-frt`, `metaverses-srv`
+
+- **Three-Entity Pattern**: The base architectural pattern for feature packages, consisting of a hierarchical relationship between three entity types
+  - **Parent Entity**: Top-level organizational unit (e.g., Cluster, Metaverse, Unik)
+  - **Child Entity**: Mid-level organizational unit belonging to a parent (e.g., Domain, Section)
+  - **Resource Entity**: Leaf-level items belonging to a child (e.g., Resource, Entity)
+  - Pattern is replicated across features with different entity names but consistent structure
+  - Can be extended with additional entities or specialized functionality for advanced features
 
 - **Workspace**: The PNPM-managed monorepo structure that coordinates multiple packages
   - Manages internal package dependencies
@@ -203,10 +230,13 @@ A developer needs to use Material UI (MUI) components to build consistent user i
 - **SC-012**: All package naming conventions are consistently applied across the monorepo (100% compliance with `-frt`/`-srv` suffixes)
 - **SC-013**: Repository does not contain excluded items (docs/ folder, AI agent files, Flowise legacy code) maintaining 100% compliance with exclusion requirements
 - **SC-014**: Team can identify and evaluate new features from universo-platformo-react repository for implementation within 1 week of their appearance
+- **SC-015**: Package architecture pattern (three-entity hierarchy) is documented and understood by 90% of developers on first review
+- **SC-016**: First feature (Clusters) successfully demonstrates three-entity pattern with full CRUD operations, serving as reference for all subsequent features
+- **SC-017**: Package interfaces are designed to support future repository separation with zero refactoring required for extraction
 
 ## Assumptions
 
-- **Technology Stack Versions**: Developers have access to reasonably recent versions of Node.js (v18+), Go (v1.20+), and can install PNPM
+- **Technology Stack Versions**: Minimum versions required: Node.js v18+, Go v1.20+, PNPM v8+. These versions support all features needed for the project.
 - **Development Environment**: Developers work on operating systems that support Node.js and Go (Linux, macOS, Windows with WSL)
 - **Supabase Account**: Team has access to Supabase credentials or can create a Supabase project for development/testing
 - **English Proficiency**: Primary development documentation is in English; Russian translations maintain identical structure
@@ -214,14 +244,15 @@ A developer needs to use Material UI (MUI) components to build consistent user i
 - **Package Naming**: The `-frt`/`-srv` suffix convention is sufficient for distinguishing frontend/backend packages at this stage
 - **React Reference**: The universo-platformo-react repository serves as a conceptual guide but this implementation may diverge in technical details due to different technology stack
 - **Legacy Code**: This is a fresh implementation and does not need to accommodate legacy code from the React version
-- **Database Provider**: Supabase is the primary database for initial implementation, with future-proofing for other providers
+- **Database Provider**: Supabase is the primary database for initial implementation, with future-proofing for other providers through abstraction layer
 - **Authentication Method**: Passport.js is the chosen authentication middleware, leveraging its ecosystem and Supabase connector
-- **Material UI Compatibility**: MUI has Angular bindings or compatible alternatives available for the Angular ecosystem
+- **Angular Material**: Angular Material provides Material Design components for Angular, serving the same role as Material-UI (MUI) does for React in the reference implementation
 - **Monorepo Benefits**: Using PNPM workspaces provides sufficient benefits for managing multiple packages compared to separate repositories
 - **Build Tooling**: Standard Angular CLI and Go build tools are sufficient for the build system
 - **Development Workflow**: Hot-reload is essential for developer productivity and worth the configuration effort
 - **Future Package Separation**: Packages are designed with loose coupling to support eventual extraction to separate repositories while maintaining base packages in monorepo
 - **React Repository Access**: Team has access to universo-platformo-react repository for reference and can periodically review it for new concepts
+- **Three-Entity Pattern Flexibility**: While three-entity pattern (Parent/Child/Resource) is the base, some features will require variations (more entities, fewer entities, or extensions with specialized functionality)
 
 ## Dependencies
 
