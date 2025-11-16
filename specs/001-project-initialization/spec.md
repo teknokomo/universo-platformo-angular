@@ -150,6 +150,18 @@ A developer needs to use Material UI (MUI) components to build consistent user i
 - **FR-031**: Setup instructions MUST include prerequisites for Node.js, Go, and PNPM
 - **FR-032**: Repository MUST include example package templates for consistent scaffolding
 
+#### Repository Synchronization & Workflow
+- **FR-033**: Team MUST periodically monitor universo-platformo-react repository for new features and architectural concepts
+- **FR-034**: New features from universo-platformo-react MUST be evaluated for implementation in this Angular/Gin stack
+- **FR-035**: Implementation MUST adapt React concepts to Angular/Gin best practices rather than direct code translation
+- **FR-036**: Repository MUST document workflow for creating Issues before implementing specifications according to .github/instructions/github-issues.md
+
+#### Explicit Exclusions
+- **FR-037**: Repository MUST NOT include a `docs/` folder (documentation will be hosted in a separate repository)
+- **FR-038**: Repository MUST NOT include AI agent rules folders or files (user will create these manually if needed)
+- **FR-039**: Repository MUST NOT replicate legacy Flowise code from universo-platformo-react
+- **FR-040**: Repository MUST NOT copy poor implementations or technical debt from universo-platformo-react
+
 ### Key Entities
 
 - **Package**: A modular unit of functionality within the monorepo, typically split into frontend and backend components
@@ -189,6 +201,8 @@ A developer needs to use Material UI (MUI) components to build consistent user i
 - **SC-010**: MUI components render correctly across Chrome, Firefox, and Safari browsers
 - **SC-011**: Repository structure is clear enough that 90% of new developers can identify where to add a new feature on first attempt
 - **SC-012**: All package naming conventions are consistently applied across the monorepo (100% compliance with `-frt`/`-srv` suffixes)
+- **SC-013**: Repository does not contain excluded items (docs/ folder, AI agent files, Flowise legacy code) maintaining 100% compliance with exclusion requirements
+- **SC-014**: Team can identify and evaluate new features from universo-platformo-react repository for implementation within 1 week of their appearance
 
 ## Assumptions
 
@@ -206,11 +220,13 @@ A developer needs to use Material UI (MUI) components to build consistent user i
 - **Monorepo Benefits**: Using PNPM workspaces provides sufficient benefits for managing multiple packages compared to separate repositories
 - **Build Tooling**: Standard Angular CLI and Go build tools are sufficient for the build system
 - **Development Workflow**: Hot-reload is essential for developer productivity and worth the configuration effort
+- **Future Package Separation**: Packages are designed with loose coupling to support eventual extraction to separate repositories while maintaining base packages in monorepo
+- **React Repository Access**: Team has access to universo-platformo-react repository for reference and can periodically review it for new concepts
 
 ## Dependencies
 
 ### External Dependencies
-- **universo-platformo-react repository**: Reference for overall architecture, concepts, and patterns (information dependency, not code dependency)
+- **universo-platformo-react repository**: Reference for overall architecture, concepts, and patterns (information dependency, not code dependency). Team must periodically monitor for new features and concepts to evaluate for implementation
 - **Supabase service**: Required for database operations and authentication backend
 - **PNPM**: Required for package management and monorepo workspace orchestration
 - **Node.js runtime**: Required for running Angular development servers and build tools
