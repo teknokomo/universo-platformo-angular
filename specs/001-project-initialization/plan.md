@@ -148,6 +148,11 @@ Phase 0 research completed with all clarifications resolved:
 
 See `research.md` for detailed rationale and alternatives considered for each decision.
 
+**Additional Research Validation** (2025-11-17):
+- `research-enhancement.md` - Extended research from web sources and Context7 documentation
+- All technical decisions validated by current industry best practices
+- New insights documented for future implementation phases (Signals API, zoneless change detection, context handling)
+
 ## Project Structure
 
 ### Documentation (this feature)
@@ -156,6 +161,8 @@ See `research.md` for detailed rationale and alternatives considered for each de
 specs/[###-feature]/
 ├── plan.md              # This file (/speckit.plan command output)
 ├── research.md          # Phase 0 output (/speckit.plan command)
+├── research-enhancement.md  # Extended research (web + Context7)
+├── architecture-comparison.md  # React repo pattern analysis
 ├── data-model.md        # Phase 1 output (/speckit.plan command)
 ├── quickstart.md        # Phase 1 output (/speckit.plan command)
 ├── contracts/           # Phase 1 output (/speckit.plan command)
