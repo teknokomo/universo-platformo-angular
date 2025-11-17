@@ -1,0 +1,83 @@
+packages:
+    - 'packages/*'
+    - 'packages/*/base'
+
+# Catalog - single source of truth for dependency versions
+# Using conservative versions to minimize migration risk
+# Based on patterns from universo-platformo-react repository
+catalog:
+    # TypeScript toolchain - unified to 5.8.x for consistent compilation
+    typescript: ^5.8.3
+    
+    # Angular ecosystem - v17+ (latest stable)
+    '@angular/animations': ^17.0.0
+    '@angular/common': ^17.0.0
+    '@angular/compiler': ^17.0.0
+    '@angular/core': ^17.0.0
+    '@angular/forms': ^17.0.0
+    '@angular/platform-browser': ^17.0.0
+    '@angular/platform-browser-dynamic': ^17.0.0
+    '@angular/router': ^17.0.0
+    
+    # Angular Material - Material Design components
+    '@angular/material': ^17.0.0
+    '@angular/cdk': ^17.0.0
+    
+    # RxJS - reactive programming library
+    rxjs: ^7.8.0
+    
+    # Zone.js - required by Angular
+    'zone.js': ~0.14.0
+    
+    # Build tools and bundlers
+    '@angular-devkit/build-angular': ^17.0.0
+    '@angular/cli': ^17.0.0
+    '@angular/compiler-cli': ^17.0.0
+    
+    # Testing - Jest for Angular (Karma deprecated)
+    jest: ^29.7.0
+    'jest-preset-angular': ^14.0.0
+    '@types/jest': ^29.5.0
+    
+    # E2E Testing - Playwright
+    '@playwright/test': ^1.40.0
+    
+    # Internationalization - ngx-translate
+    '@ngx-translate/core': ^15.0.0
+    '@ngx-translate/http-loader': ^8.0.0
+    
+    # State Management
+    '@ngrx/store': ^17.0.0
+    '@ngrx/effects': ^17.0.0
+    '@ngrx/router-store': ^17.0.0
+    '@ngrx/store-devtools': ^17.0.0
+    
+    # HTTP Client & Data Fetching
+    '@tanstack/angular-query-experimental': ^5.0.0
+    
+    # Form Validation
+    zod: ^3.22.0
+    
+    # UI Notifications
+    'ngx-toastr': ^18.0.0
+    
+    # Date handling
+    dayjs: ^1.11.10
+    
+    # HTTP utilities
+    axios: ^1.6.0
+    
+    # TypeScript types
+    '@types/node': ^20.10.0
+    
+    # Linting and formatting
+    eslint: ^8.56.0
+    '@typescript-eslint/eslint-plugin': ^6.15.0
+    '@typescript-eslint/parser': ^6.15.0
+    prettier: ^3.1.0
+    
+    # Angular library packaging
+    'ng-packagr': ^17.0.0
+    
+    # Build optimization
+    'tslib': ^2.6.0
