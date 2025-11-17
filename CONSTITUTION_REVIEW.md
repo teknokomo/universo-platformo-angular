@@ -330,6 +330,58 @@ The project is ready to begin feature development following the constitution's p
 
 ---
 
-**Document Version**: 1.0  
+## Addendum: Constitution v1.0.2 Update (2025-11-17)
+
+### Update Summary
+
+Following deep analysis of the universo-platformo-react repository, the constitution was updated from v1.0.1 to v1.0.2 (MINOR version) to incorporate shared infrastructure architectural patterns identified as P1/P2 priorities.
+
+### Changes Made
+
+**Principle VI - Incremental Feature Development (Enhanced)**
+- Added steps 1-2 before base infrastructure:
+  1. Shared infrastructure packages first (types, utils, api-client, i18n, rest-docs)
+  2. Shared component libraries to eliminate duplication
+- Updated rationale to emphasize preventing code duplication
+
+**Required Technologies (Expanded)**
+- Updated authentication from "Passport.js" to "Go-based authentication middleware following Passport.js patterns"
+- Added "PNPM catalog for centralized dependency management"
+- Added "Nx or Turbo for efficient monorepo builds"
+- Added "ngx-translate for Angular internationalization"
+
+**Architecture Constraints (4 New Constraints)**
+- Shared infrastructure packages MUST be implemented before dependent feature packages
+- PNPM catalog MUST be used for centralized dependency version management
+- Package README files MUST follow standardized templates
+- Shared component libraries MUST eliminate code duplication across frontend
+
+### Rationale
+
+These changes align the constitution with specification updates (FR-015-NEW through FR-047-NEW) that incorporate proven architectural patterns from the React implementation adapted for Angular/Gin stack.
+
+### Impact Assessment
+
+- **Breaking Changes**: None
+- **New Requirements**: Yes (shared infrastructure priority, build orchestration, README templates)
+- **Version Type**: MINOR (new architecture constraints without breaking existing principles)
+- **Backward Compatibility**: Maintained with v1.0.1
+- **Alignment**: 100% with updated specification v1.1
+
+### Validation
+
+- ✅ All 7 core principles remain intact
+- ✅ Bilingual documentation requirement unchanged (NON-NEGOTIABLE)
+- ✅ Technology stack updated for Angular/Gin specifics
+- ✅ Architecture constraints enhanced with shared infrastructure patterns
+- ✅ Sync impact report v1.0.2 added to constitution
+- ✅ Specification FR requirements aligned with constitution principles
+
+**Conclusion**: Constitution v1.0.2 successfully incorporates shared infrastructure patterns while maintaining governance integrity and backward compatibility.
+
+---
+
+**Document Version**: 1.1  
 **Review Completed**: 2025-11-16  
+**Addendum Added**: 2025-11-17  
 **Next Review**: Before first major feature implementation  
