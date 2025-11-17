@@ -1,4 +1,32 @@
 <!--
+Sync Impact Report - Constitution v1.0.2
+========================================
+Version Change: v1.0.1 → v1.0.2 (MINOR - New Architecture Constraints)
+Modified Principles: VI (enhanced with shared infrastructure priority)
+Modified Sections: Required Technologies, Architecture Constraints
+Changes Made:
+  - Principle VI: Added shared infrastructure packages and component libraries as first steps
+  - Required Technologies: Updated authentication to Go-based middleware, added PNPM catalog, Nx/Turbo, ngx-translate
+  - Architecture Constraints: Added 4 new constraints for shared infrastructure, PNPM catalog, README templates, and component libraries
+Review Status:
+  ✅ Based on comprehensive analysis of universo-platformo-react repository
+  ✅ Aligns with updated specification v1.1 (FR-015-NEW through FR-047-NEW)
+  ✅ Incorporates P1 and P2 architectural patterns
+Impact Analysis:
+  - MINOR version bump due to new architecture constraints
+  - Enhances Principle VI with shared infrastructure priority
+  - Adds explicit technology requirements for build orchestration and i18n
+  - No breaking changes to existing principles
+  - Maintains backward compatibility with v1.0.1
+Templates Status:
+  ✅ spec-template.md - Updated with new patterns
+  ✅ plan-template.md - Aligns with constitution
+  ✅ tasks-template.md - Aligns with constitution
+  ⚠️ GitHub instruction files - To be followed during implementation
+Follow-up TODOs: None - Constitution reflects current architectural decisions
+-->
+
+<!--
 Sync Impact Report - Constitution v1.0.1
 ========================================
 Version Change: v1.0.0 → v1.0.1 (PATCH - Clarifications)
@@ -89,14 +117,16 @@ Issues and PRs MUST include both English and Russian versions using the exact sp
 ### VI. Incremental Feature Development
 
 Feature development MUST follow the pattern established in the reference React implementation:
-1. Base infrastructure first (authentication, database, routing)
-2. First complete feature with full CRUD (e.g., Clusters package with three-entity structure: Clusters/Domains/Resources entities)
-3. Replicate structure for similar features (e.g., Metaverses package: Metaverses/Sections/Entities; Uniks with potentially more entities)
-4. Add specialized functionality as needed (e.g., Spaces/Canvases packages with LangChain graph nodes, UPDL nodes)
+1. Shared infrastructure packages first (types, utils, api-client, i18n, rest-docs) to provide common functionality
+2. Shared component libraries to eliminate duplication across frontend packages
+3. Base infrastructure (authentication packages, database, routing)
+4. First complete feature with full CRUD (e.g., Clusters package with three-entity structure: Clusters/Domains/Resources entities)
+5. Replicate structure for similar features (e.g., Metaverses package: Metaverses/Sections/Entities; Uniks with potentially more entities)
+6. Add specialized functionality as needed (e.g., Spaces/Canvases packages with advanced features)
 
 Each feature MUST be independently testable and deployable.
 
-**Rationale**: Starting with a complete reference feature establishes patterns that can be replicated efficiently. This approach reduces decision fatigue and maintains consistency across the codebase.
+**Rationale**: Establishing shared infrastructure first prevents code duplication and ensures consistent patterns. Starting with a complete reference feature establishes patterns that can be replicated efficiently. This approach reduces decision fatigue and maintains consistency across the codebase.
 
 ### VII. Specification-Driven Development
 
@@ -112,8 +142,10 @@ Before implementing any feature, a complete specification MUST be created follow
 - **UI Library**: Angular Material (Material Design implementation for Angular)
 - **Backend Framework**: Gin (Go web framework)
 - **Database**: Supabase (PostgreSQL-based, with REST and realtime APIs)
-- **Authentication**: Passport.js with Supabase connector
-- **Package Manager**: PNPM with workspace support
+- **Authentication**: Go-based authentication middleware following Passport.js patterns with Supabase connector
+- **Package Manager**: PNPM with workspace support and catalog for centralized dependency management
+- **Build Orchestration**: Nx or Turbo for efficient monorepo builds
+- **Internationalization**: ngx-translate for Angular (equivalent to react-i18next)
 - **Version Control**: Git with conventional commits
 
 ### Architecture Constraints
@@ -123,6 +155,10 @@ Before implementing any feature, a complete specification MUST be created follow
 - Authentication MUST be stateless using JWT tokens
 - All packages MUST follow the `base/` directory convention
 - Package naming MUST use the pattern: `{feature}-{frt|srv}`
+- Shared infrastructure packages MUST be implemented before feature packages that depend on them
+- PNPM catalog MUST be used for centralized dependency version management
+- Package README files MUST follow standardized templates for consistency
+- Shared component libraries MUST be used to eliminate code duplication across frontend packages
 
 ### Excluded Elements
 
@@ -197,4 +233,4 @@ Any deviation from these principles MUST be explicitly justified in the pull req
 - Why the deviation is necessary
 - Why simpler alternatives following the constitution are insufficient
 
-**Version**: 1.0.1 | **Ratified**: 2025-11-16 | **Last Amended**: 2025-11-16
+**Version**: 1.0.2 | **Ratified**: 2025-11-16 | **Last Amended**: 2025-11-17
