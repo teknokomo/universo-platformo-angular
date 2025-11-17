@@ -167,49 +167,133 @@ specs/[###-feature]/
 ```text
 # Monorepo structure with PNPM workspaces
 packages/
+├── TEMPLATE-README.md           # Package README template
+├── TEMPLATE-README-GUIDE.md     # Template usage guide
+├── README.md                    # Packages directory overview
+│
 ├── universo-types/              # Shared TypeScript type definitions
 │   └── base/
 │       ├── src/
-│       └── tests/
+│       │   ├── interfaces/      # Interface definitions
+│       │   ├── types/           # Type definitions
+│       │   └── index.ts
+│       ├── dist/                # Compiled output (CJS, ESM, types)
+│       ├── package.json
+│       ├── tsconfig.json
+│       ├── README.md
+│       └── README-RU.md
+│
 ├── universo-utils/              # Shared utility functions
 │   └── base/
 │       ├── src/
-│       └── tests/
+│       │   ├── utils/           # Utility functions
+│       │   └── index.ts
+│       ├── dist/                # Compiled output (CJS, ESM, types)
+│       ├── package.json
+│       ├── tsconfig.json
+│       ├── README.md
+│       └── README-RU.md
+│
 ├── universo-api-client/         # Type-safe API client libraries
 │   └── base/
 │       ├── src/
-│       └── tests/
+│       │   ├── clients/         # API client implementations
+│       │   ├── types/           # Request/response types
+│       │   └── index.ts
+│       ├── dist/                # Compiled output (CJS, ESM, types)
+│       ├── package.json
+│       ├── tsconfig.json
+│       ├── README.md
+│       └── README-RU.md
+│
 ├── universo-i18n/              # Centralized internationalization
 │   └── base/
 │       ├── src/
-│       └── tests/
+│       │   ├── locales/         # Translation files
+│       │   │   ├── en/
+│       │   │   └── ru/
+│       │   ├── i18n.ts          # i18n configuration
+│       │   └── index.ts
+│       ├── dist/                # Compiled output
+│       ├── package.json
+│       ├── tsconfig.json
+│       ├── README.md
+│       └── README-RU.md
+│
 ├── universo-rest-docs/         # API documentation server
 │   └── base/
 │       ├── src/
-│       └── tests/
+│       │   ├── swagger/         # OpenAPI specifications
+│       │   └── index.ts
+│       ├── dist/                # Compiled output
+│       ├── package.json
+│       ├── tsconfig.json
+│       ├── README.md
+│       └── README-RU.md
+│
 ├── universo-ng-components/      # Shared Angular component library
 │   └── base/
 │       ├── src/
 │       │   ├── lib/
+│       │   │   ├── components/  # Shared components
+│       │   │   ├── directives/  # Shared directives
+│       │   │   ├── pipes/       # Shared pipes
+│       │   │   └── services/    # Shared services
+│       │   ├── assets/          # Component-specific assets
+│       │   │   ├── icons/
+│       │   │   └── images/
+│       │   ├── i18n/            # Component translations
+│       │   │   ├── en/
+│       │   │   │   └── translations.json
+│       │   │   └── ru/
+│       │   │       └── translations.json
 │       │   └── public-api.ts
-│       └── tests/
+│       ├── dist/                # Compiled output
+│       ├── package.json
+│       ├── ng-package.json      # Angular library configuration
+│       ├── tsconfig.json
+│       ├── README.md
+│       └── README-RU.md
+│
 ├── auth-frt/                    # Authentication frontend (Angular)
 │   └── base/
 │       ├── src/
 │       │   ├── lib/
-│       │   │   ├── guards/
-│       │   │   ├── services/
-│       │   │   └── components/
+│       │   │   ├── guards/      # Route guards (SessionGuard, etc.)
+│       │   │   ├── services/    # Auth services (AuthService, TokenService)
+│       │   │   ├── components/  # Auth UI (LoginForm, LogoutButton)
+│       │   │   └── interceptors/# HTTP interceptors
+│       │   ├── assets/          # Auth-specific assets
+│       │   │   └── icons/
+│       │   ├── i18n/            # Auth translations
+│       │   │   ├── en/
+│       │   │   │   └── translations.json
+│       │   │   └── ru/
+│       │   │       └── translations.json
 │       │   └── public-api.ts
-│       └── tests/
+│       ├── dist/                # Compiled output
+│       ├── package.json
+│       ├── ng-package.json
+│       ├── tsconfig.json
+│       ├── README.md
+│       └── README-RU.md
+│
 └── auth-srv/                    # Authentication backend (Go/Gin)
     └── base/
         ├── cmd/
+        │   └── server/          # Server entry point
         ├── internal/
-        │   ├── handlers/
-        │   ├── middleware/
-        │   └── services/
-        └── tests/
+        │   ├── handlers/        # HTTP handlers (login, logout, session)
+        │   ├── middleware/      # Auth middleware (JWT validation)
+        │   ├── services/        # Business logic (session management)
+        │   ├── repository/      # Data access layer
+        │   ├── validators/      # Input validation
+        │   └── configs/         # Configuration constants
+        ├── assets/              # Embedded static resources (if needed)
+        ├── go.mod
+        ├── go.sum
+        ├── README.md
+        └── README-RU.md
 
 # Root configuration
 .github/

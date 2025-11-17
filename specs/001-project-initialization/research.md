@@ -350,9 +350,162 @@ catalog:
 | Go Authentication | **supabase-go + gin-jwt** | Official library, mature middleware, best practices |
 | Dependency Management | **PNPM Catalog** | Centralized versions, consistency |
 
+---
+
+## 7. Package Organization Best Practices from universo-platformo-react
+
+### Decision: Adopt Enhanced Package Structure with Assets, i18n, and Features
+
+### Rationale
+
+Deep analysis of universo-platformo-react repository (451+ files across 33 packages) revealed several critical organizational patterns that significantly improve maintainability and developer experience in a large monorepo:
+
+1. **Assets Directory (`src/assets/`)**: Package-specific icons and images stored within each package
+   - **Benefit**: Eliminates confusion about asset location - assets live with the code that uses them
+   - **Benefit**: Enables package-level asset optimization and independent versioning
+   - **Benefit**: Supports clean package extraction to separate repositories
+   - **Pattern**: Organized in subdirectories by type: `icons/`, `images/`
+   - **Build**: Legacy packages use gulp to copy, modern packages use tsdown for automatic handling
+
+2. **Internationalization Directory (`src/i18n/`)**: Package-level translations within source code
+   - **Benefit**: Keeps translations close to the components/features that use them
+   - **Benefit**: Enables namespace-based translation management (prevents key conflicts)
+   - **Benefit**: Supports bilingual development workflow (English first, then Russian)
+   - **Structure**: `src/i18n/en/translations.json` and `src/i18n/ru/translations.json`
+   - **Integration**: Works with centralized `universo-i18n` package for shared configuration
+
+3. **Features Directory (`src/features/`)**: Self-contained feature modules for complex packages
+   - **Benefit**: Better organization than flat component directory for large packages
+   - **Benefit**: Each feature can have its own components, hooks, utils, types
+   - **Benefit**: Supports code splitting and lazy loading
+   - **Benefit**: Clear feature boundaries enable easier refactoring
+   - **Example**: publish-frt has `features/arjs/`, `features/playcanvas/`, `features/template/`
+
+4. **Configs Directory (`src/configs/`)**: Centralized configuration constants
+   - **Benefit**: Single source of truth for package configuration
+   - **Benefit**: Easy to find and modify configuration values
+   - **Benefit**: Type-safe configuration with TypeScript
+   - **Benefit**: Environment-specific configs without scattered magic numbers
+
+5. **Validators Directory (`internal/validators/`)**: Backend input validation separated from logic
+   - **Benefit**: Separates validation concerns from business logic
+   - **Benefit**: Reusable validation schemas across multiple handlers
+   - **Benefit**: Clear API contract enforcement at entry points
+   - **Benefit**: Easier to maintain and test validation rules
+   - **Pattern**: Used with Zod or similar validation libraries
+
+6. **Builders Directory (`src/builders/`)**: Specialized transformation/generation logic
+   - **Benefit**: Separates complex transformation logic from presentation
+   - **Example**: UPDL to AR.js builder, UPDL to PlayCanvas builder
+   - **Benefit**: Testable, reusable transformation pipelines
+   - **Benefit**: Clear separation of concerns
+
+7. **Package README Templates**: Standardized documentation with bilingual support
+   - **Artifact**: TEMPLATE-README.md with comprehensive structure
+   - **Artifact**: TEMPLATE-README-GUIDE.md with usage instructions
+   - **Benefit**: Consistent documentation across all 33+ packages
+   - **Benefit**: Clear guidance for package authors
+   - **Benefit**: Conditional sections for different package types (frontend/backend/library)
+   - **Benefit**: Enforces bilingual documentation requirement
+
+### Alternatives Considered
+
+**Flat Structure (No Subdirectories)**:
+- **Pros**: Simpler initial setup, fewer directories
+- **Cons**: Becomes unmaintainable at scale, assets scattered, translations hard to find
+- **Why Rejected**: React repo proves this doesn't scale beyond 5-10 files per package
+
+**Global Assets Directory**:
+- **Pros**: Single location for all assets
+- **Cons**: Unclear ownership, no package isolation, blocks independent deployment
+- **Why Rejected**: Violates package-first architecture principle
+
+**No Package-Level i18n**:
+- **Pros**: Simpler setup with only centralized translations
+- **Cons**: All translations in one massive file, no namespace isolation, merge conflicts
+- **Why Rejected**: React repo has 10+ packages with translations, proves need for distribution
+
+### Implementation Strategy
+
+#### For Angular Frontend Packages
+
+1. **Assets**: Use Angular's asset pipeline configuration in ng-package.json
+   ```json
+   {
+     "assets": ["./src/assets/**/*"]
+   }
+   ```
+
+2. **i18n**: Integrate with ngx-translate and universo-i18n package
+   ```typescript
+   // In package: src/i18n/en/translations.json
+   // Use with: translate.instant('package-name.key')
+   ```
+
+3. **Features**: Organize as Angular feature modules when package is complex
+   ```
+   src/features/feature-name/
+   ├── components/
+   ├── services/
+   ├── models/
+   └── feature-name.module.ts
+   ```
+
+#### For Go Backend Packages
+
+1. **Assets**: Use go:embed directive for static file embedding
+   ```go
+   //go:embed assets/*
+   var assetsFS embed.FS
+   ```
+
+2. **Validators**: Place in `internal/validators/` directory
+   ```go
+   package validators
+   
+   func ValidateLoginRequest(req *LoginRequest) error {
+       // validation logic
+   }
+   ```
+
+3. **Configs**: Place in `internal/configs/` directory
+   ```go
+   package configs
+   
+   const (
+       DefaultTimeout = 30 * time.Second
+       MaxRetries     = 3
+   )
+   ```
+
+#### For Shared TypeScript Libraries
+
+1. **Dual Build**: Use appropriate build tool (tsdown for modern, tsc for simple)
+2. **Structure**: Keep flat for simple libraries, use subdirectories for complex
+3. **Assets**: Include if library provides UI components
+
+### Implementation Notes
+
+- **Angular**: Use ng-packagr for library builds (already handles assets well)
+- **Go**: Use standard Go build with embed for assets
+- **Complex Packages**: Use features/ directory when package has 3+ distinct functional areas
+- **Simple Packages**: Keep flat structure for packages with < 10 files
+- **Documentation**: Always create both README.md and README-RU.md using templates
+
+### References
+
+- universo-platformo-react repository structure (33 packages analyzed)
+- packages/README.md - comprehensive package documentation
+- packages/TEMPLATE-README.md and TEMPLATE-README-GUIDE.md
+- Angular asset management documentation
+- Go embed package documentation
+- ngx-translate best practices
+
+---
+
 ## Next Steps
 
-With all technical decisions made, proceed to **Phase 1: Design & Contracts**:
+With all technical decisions made AND package organization patterns identified, proceed to **Phase 1: Design & Contracts**:
 
 1. Generate `data-model.md` - Document key entities and relationships
 2. Create API contracts in `/contracts/` - Define REST API specifications
@@ -360,3 +513,4 @@ With all technical decisions made, proceed to **Phase 1: Design & Contracts**:
 4. Update agent context - Add new technology decisions
 
 All NEEDS CLARIFICATION items are now RESOLVED. ✅
+All ARCHITECTURE PATTERNS from React repository are now DOCUMENTED. ✅

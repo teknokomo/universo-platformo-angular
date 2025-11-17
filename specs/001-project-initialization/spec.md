@@ -199,6 +199,30 @@ A developer needs to use Material UI (MUI) components to build consistent user i
 - **FR-065**: First feature implementation (Clusters) MUST serve as the reference pattern for all subsequent features
 - **FR-066**: Documentation MUST explain the feature development progression and pattern replication strategy
 
+#### Package Documentation Standards
+- **FR-067**: Each package MUST include README.md and README-RU.md following standardized templates in identical structure and line count
+- **FR-068**: Package READMEs MUST include mandatory sections: Overview, Package Information, Key Features, Installation & Setup, Usage, Architecture, File Structure, Testing, Development, Documentation, Contributing, License
+- **FR-069**: Repository MUST provide TEMPLATE-README.md and TEMPLATE-README-GUIDE.md in packages/ directory for consistent package documentation across the monorepo
+- **FR-070**: Package READMEs MUST be created in English first (authoritative version) followed by exact Russian translation
+
+#### Package Asset Management
+- **FR-071**: Frontend packages MAY include assets/ directory within src/ for package-specific icons, images, and static resources
+- **FR-072**: Asset build pipeline MUST copy assets from src/assets/ to dist/assets/ during package build process
+- **FR-073**: Go backend packages MUST use go:embed directive for embedding static assets when needed
+- **FR-074**: Assets MUST be organized in subdirectories by type (icons/, images/) for clarity
+
+#### Package Internationalization Structure
+- **FR-075**: Frontend packages requiring localization MUST include i18n/ directory within src/ organized by language code
+- **FR-076**: Translation files MUST be organized in language subdirectories following pattern src/i18n/{language-code}/ (e.g., src/i18n/en/, src/i18n/ru/)
+- **FR-077**: Each package MUST use namespace prefixes for translation keys to prevent conflicts across packages
+- **FR-078**: Translation structure MUST integrate with centralized universo-i18n package for shared configuration
+
+#### Advanced Package Organization
+- **FR-079**: Complex packages MAY use features/ directory within src/ for organizing self-contained feature modules
+- **FR-080**: Packages MAY include configs/ directory within src/ for centralized configuration constants and settings
+- **FR-081**: Backend packages MUST include validators/ directory within internal/ for input validation logic separated from business logic
+- **FR-082**: Package structure MUST follow framework conventions: Angular uses lib/ for library code, Go uses internal/ for private code
+
 ### Key Entities
 
 - **Package**: A modular unit of functionality within the monorepo, typically split into frontend and backend components
@@ -275,6 +299,11 @@ A developer needs to use Material UI (MUI) components to build consistent user i
 - **SC-020**: Package README templates exist and are used by 100% of packages for consistent documentation structure
 - **SC-021**: Shared Angular component library successfully eliminates code duplication, with zero duplicate component implementations across feature packages
 - **SC-022**: Authentication packages (`auth-frt`, `auth-srv`) provide complete authentication flow that can be integrated into any feature package within 30 minutes
+- **SC-023**: Package README templates (TEMPLATE-README.md, TEMPLATE-README-GUIDE.md) exist in packages/ directory and provide clear guidance for creating package documentation
+- **SC-024**: 100% of packages include both README.md and README-RU.md with identical structure, demonstrating proper use of templates
+- **SC-025**: Packages with UI components include properly organized assets/ directory, and assets are correctly copied to dist/ during build
+- **SC-026**: Frontend packages requiring translations include i18n/ directory structure with language subdirectories, integrated with universo-i18n package
+- **SC-027**: Architecture comparison document exists documenting patterns learned from universo-platformo-react and adaptations for Angular/Go stack
 
 ## Assumptions
 
