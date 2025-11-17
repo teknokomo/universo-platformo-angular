@@ -1,4 +1,33 @@
 <!--
+Sync Impact Report - Constitution v1.0.3
+========================================
+Version Change: v1.0.2 → v1.0.3 (MINOR - Strengthened Modularity Requirements)
+Modified Principles: I, II (absolute prohibition of non-package implementations)
+Modified Sections: Architecture Constraints (new FORBIDDEN section), Strategic Context (new section)
+Changes Made:
+  - Principle I: Added absolute prohibition language forbidding non-package implementations
+  - Principle II: Strengthened with explicit migration path to separate repositories
+  - Architecture Constraints: Added new FORBIDDEN section listing prohibited practices
+  - Strategic Context: New section explaining monorepo-to-separate-repos evolution
+Review Status:
+  ✅ Based on deep analysis of universo-platformo-react package structure
+  ✅ Responds to critical requirement for absolute modular implementation
+  ✅ Verified all packages in React repo follow base/ convention
+Impact Analysis:
+  - MINOR version bump due to new architectural prohibitions
+  - Strengthens enforcement of package-first development
+  - Makes migration path explicit for future repository separation
+  - Adds explicit "do not" examples to prevent violations
+  - No breaking changes to existing compliant code
+Templates Status:
+  ✅ spec-template.md - Aligns with strengthened constitution
+  ✅ plan-template.md - Aligns with strengthened constitution
+  ✅ tasks-template.md - Aligns with strengthened constitution
+  ⚠️ GitHub instruction files - To be followed during implementation
+Follow-up TODOs: None - Constitution now has absolute clarity on modularity
+-->
+
+<!--
 Sync Impact Report - Constitution v1.0.2
 ========================================
 Version Change: v1.0.1 → v1.0.2 (MINOR - New Architecture Constraints)
@@ -73,17 +102,26 @@ Follow-up TODOs: None
 
 ## Core Principles
 
-### I. Monorepo Organization
+### I. Monorepo Organization (ABSOLUTE REQUIREMENT)
 
-The project MUST be organized as a monorepo managed by PNPM. All packages MUST reside in the `packages/` directory. For features requiring both frontend and backend, they MUST be split into separate packages with clear naming: `packages/{feature}-frt` (frontend) and `packages/{feature}-srv` (backend). Each package MUST contain a `base/` directory at its root containing the core implementation. This convention supports future multiple technology stack implementations (e.g., React version, Vue version) while maintaining a common interface.
+The project MUST be organized as a monorepo managed by PNPM. **ALL** functionality (except root-level build and launch scripts) MUST be implemented as independent packages residing in the `packages/` directory. For features requiring both frontend and backend, they MUST be split into separate packages with clear naming: `packages/{feature}-frt` (frontend) and `packages/{feature}-srv` (backend). Each package MUST contain a `base/` directory at its root containing the core implementation. This convention supports future multiple technology stack implementations (e.g., React version, Vue version) while maintaining a common interface.
 
-**Rationale**: Monorepo structure enables shared tooling, consistent versioning, and atomic cross-package changes. The `base/` convention future-proofs the architecture for multiple technology stack implementations while maintaining a common interface.
+**CRITICAL**: It is **ABSOLUTELY FORBIDDEN** to implement functionality outside of the `packages/` directory structure. Any feature implementation that does not follow the package-based architecture is a **DIRECT VIOLATION** of this constitution and MUST be rejected immediately.
 
-### II. Package-First Development
+**Rationale**: Monorepo structure enables shared tooling, consistent versioning, and atomic cross-package changes. The `base/` convention future-proofs the architecture for multiple technology stack implementations while maintaining a common interface. The absolute requirement for package-based organization ensures that all packages can be extracted into separate repositories in the future without refactoring, which is a **CORE STRATEGIC GOAL** of this project.
 
-Every feature MUST start as an independent package with clear boundaries. Packages MUST be self-contained with their own dependencies, configuration, and documentation. Packages MUST expose well-defined interfaces for inter-package communication.
+### II. Package-First Development (MANDATORY FOR ALL FEATURES)
 
-**Rationale**: Package-first architecture enforces modularity, enables independent development cycles, and allows packages to be extracted into separate repositories in the future without refactoring.
+**EVERY** feature MUST start as an independent package with clear boundaries. Packages MUST be self-contained with their own dependencies, configuration, and documentation. Packages MUST expose well-defined interfaces for inter-package communication.
+
+**Strategic Context**: This project follows a deliberate evolution path from monorepo to multi-repo:
+1. **Phase 1 (Current)**: All packages as workspace packages within the monorepo
+2. **Phase 2 (Future)**: Gradual extraction of mature packages into separate repositories
+3. **Phase 3 (Long-term)**: Only base framework packages remain in monorepo, all features in separate repos
+
+**THEREFORE**: Every package MUST be designed from day one to be repository-independent. Any tight coupling between packages that would prevent future repository separation is a **CRITICAL DEFECT**.
+
+**Rationale**: Package-first architecture enforces modularity, enables independent development cycles, and allows packages to be extracted into separate repositories in the future without refactoring. This is not an optional optimization—it is the **CORE ARCHITECTURAL STRATEGY** that enables the project's long-term evolution.
 
 ### III. Bilingual Documentation (NON-NEGOTIABLE)
 
@@ -160,6 +198,21 @@ Before implementing any feature, a complete specification MUST be created follow
 - Package README files MUST follow standardized templates for consistency
 - Shared component libraries MUST be used to eliminate code duplication across frontend packages
 
+### FORBIDDEN Implementations (ABSOLUTE PROHIBITIONS)
+
+The following practices are **STRICTLY FORBIDDEN** and constitute violations of this constitution:
+
+1. **Non-Package Implementations**: Creating ANY feature code outside of `packages/` directory (except root-level build/launch scripts)
+2. **Monolithic Structure**: Implementing frontend and backend in a single package when they should be separate `-frt` and `-srv` packages
+3. **Missing base/ Directory**: Creating packages without a `base/` directory at their root
+4. **Direct Cross-Package Imports**: Importing from package internals instead of using well-defined public interfaces
+5. **Tight Coupling**: Creating dependencies between packages that would prevent future repository separation
+6. **Inconsistent Naming**: Using package names that don't follow the `{feature}-{frt|srv}` or `universo-{shared-component}` pattern
+7. **Non-Modular Shared Code**: Creating shared code outside of dedicated shared infrastructure packages (universo-types, universo-utils, etc.)
+8. **Legacy Code Patterns**: Blindly copying implementation details from the React reference repository without adapting to Angular/Gin best practices
+
+**Enforcement**: Any pull request containing forbidden implementations MUST be rejected immediately with a reference to this section.
+
 ### Excluded Elements
 
 The following MUST NOT be implemented in this repository:
@@ -225,6 +278,7 @@ All pull requests MUST include verification that:
 - GitHub workflow guidelines are followed
 - Technology stack constraints are respected
 - Package structure conventions are maintained
+- **NO FORBIDDEN IMPLEMENTATIONS** are present (see FORBIDDEN Implementations section)
 
 ### Complexity Justification
 
@@ -233,4 +287,6 @@ Any deviation from these principles MUST be explicitly justified in the pull req
 - Why the deviation is necessary
 - Why simpler alternatives following the constitution are insufficient
 
-**Version**: 1.0.2 | **Ratified**: 2025-11-16 | **Last Amended**: 2025-11-17
+**Note**: Deviations from the FORBIDDEN Implementations list are **NEVER** acceptable and CANNOT be justified under any circumstances.
+
+**Version**: 1.0.3 | **Ratified**: 2025-11-16 | **Last Amended**: 2025-11-17

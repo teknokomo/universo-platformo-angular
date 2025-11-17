@@ -51,21 +51,71 @@ Initialize Universo Platformo Angular as a monorepo with PNPM workspace manageme
 - Expected team: 3-10 developers
 - Codebase: 50k-100k LOC target for initial implementation
 
+## Strategic Context: Monorepo-to-Multirepo Evolution
+
+**CRITICAL UNDERSTANDING**: This project follows a deliberate architectural evolution:
+
+### Phase 1: Unified Monorepo (CURRENT)
+- All packages as workspace packages within single repository
+- Shared tooling, versioning, and build orchestration
+- Easy cross-package changes and atomic commits
+- **Goal**: Establish patterns and prove architecture
+
+### Phase 2: Gradual Package Extraction (FUTURE)
+- Mature, stable packages moved to separate repositories
+- Core packages remain in monorepo
+- Feature packages become independent
+- **Goal**: Enable independent versioning and deployment
+
+### Phase 3: Multi-Repository Architecture (LONG-TERM)
+- Only base framework packages in monorepo
+- All features in separate repositories
+- Packages published to registry
+- **Goal**: True microservice architecture with package federation
+
+### Architectural Implications
+
+**THEREFORE**: Every design decision MUST consider:
+1. Can this package be moved to a separate repository without refactoring?
+2. Are all dependencies explicit and versioned?
+3. Is the public API stable and well-defined?
+4. Is the package self-contained with its own tests and documentation?
+
+**Reference**: Universo Platformo React (https://github.com/teknokomo/universo-platformo-react) demonstrates this pattern with:
+- 35+ packages following modular structure
+- Clear separation of concerns (`-frt` / `-srv` packages)
+- Shared infrastructure packages (`universo-types`, `universo-utils`, `universo-api-client`, `universo-i18n`, `universo-rest-docs`)
+- Feature packages ready for extraction (`clusters-frt`, `clusters-srv`, `metaverses-frt`, `metaverses-srv`, etc.)
+
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-### ✅ Principle I: Monorepo Organization
+### ⚠️ CRITICAL: Absolute Modular Implementation Requirement
+
+**THIS PROJECT MANDATES 100% MODULAR PACKAGE-BASED ARCHITECTURE**
+
+All functionality (except root-level build/launch scripts) MUST be implemented in packages within `packages/` directory. This is **NON-NEGOTIABLE** and follows Constitution v1.0.3.
+
+**Rationale**: This project is designed for eventual package extraction to separate repositories. Every package must be repository-independent from day one.
+
+**FORBIDDEN**: Creating any feature code outside `packages/` directory structure.
+
+See `.specify/memory/constitution.md` Section "FORBIDDEN Implementations" for complete list of prohibited practices.
+
+### ✅ Principle I: Monorepo Organization (ABSOLUTE REQUIREMENT)
 - **Status**: PASS
-- **Check**: Project will be organized as PNPM monorepo with packages in `packages/` directory
+- **Check**: Project will be organized as PNPM monorepo with ALL packages in `packages/` directory
 - **Check**: Packages will follow `-frt` (frontend) and `-srv` (backend) naming convention
 - **Check**: Each package will contain `base/` directory for core implementation
+- **CRITICAL**: Absolutely NO functionality implemented outside of packages/ (except root build/launch scripts)
 
-### ✅ Principle II: Package-First Development
+### ✅ Principle II: Package-First Development (MANDATORY FOR ALL FEATURES)
 - **Status**: PASS
 - **Check**: All features will start as independent packages
 - **Check**: Packages will have well-defined interfaces for inter-package communication
 - **Check**: Package architecture supports future extraction to separate repositories
+- **CRITICAL**: Every package designed for repository independence from day one
 
 ### ✅ Principle III: Bilingual Documentation (NON-NEGOTIABLE)
 - **Status**: PASS
@@ -130,6 +180,19 @@ Initialize Universo Platformo Angular as a monorepo with PNPM workspace manageme
 - ✅ Package README templates for consistency
 - ✅ Shared component libraries to eliminate duplication
 
+### FORBIDDEN Implementations Check
+- **Status**: PASS - No violations planned
+- ❌ Non-package implementations (outside packages/)
+- ❌ Monolithic frontend+backend in single package
+- ❌ Packages without base/ directory
+- ❌ Direct cross-package imports from internals
+- ❌ Tight coupling preventing repository separation
+- ❌ Inconsistent package naming
+- ❌ Non-modular shared code
+- ❌ Blind copying from React repo without adaptation
+
+**All forbidden practices will be actively avoided in implementation.**
+
 ### Excluded Elements Check
 - **Status**: PASS
 - ✅ No `docs/` folder will be created (separate repository)
@@ -171,8 +234,13 @@ specs/[###-feature]/
 
 ### Source Code (repository root)
 
+**⚠️ CRITICAL: ALL implementation code MUST be in packages/ directory**
+
+The structure below shows the ONLY acceptable pattern for code organization. Any deviation violates Constitution v1.0.3.
+
 ```text
 # Monorepo structure with PNPM workspaces
+# ⚠️ ALL FEATURE CODE MUST BE IN packages/ DIRECTORY
 packages/
 ├── TEMPLATE-README.md           # Package README template
 ├── TEMPLATE-README-GUIDE.md     # Template usage guide
@@ -324,21 +392,37 @@ README-RU.md                    # Russian documentation
 
 **Structure Decision**: 
 
-This is a **monorepo with multiple packages** structure. The project uses PNPM workspaces to manage multiple independent packages that can be developed, tested, and versioned together. Key architectural decisions:
+This is a **monorepo with multiple packages** structure. The project uses PNPM workspaces to manage multiple independent packages that can be developed, tested, and versioned together. 
 
-1. **Package Organization**: All packages in `packages/` directory following naming conventions:
+**⚠️ CRITICAL REQUIREMENT**: This is NOT just a recommended pattern—it is the ONLY acceptable architecture. ALL feature implementation MUST follow this structure without exception.
+
+**Key architectural decisions:**
+
+1. **Package Organization (MANDATORY)**: ALL packages in `packages/` directory following naming conventions:
    - Shared infrastructure: `universo-*` prefix
    - Feature packages: `{feature}-frt` (frontend), `{feature}-srv` (backend)
+   - **FORBIDDEN**: Any feature code outside of `packages/` directory
    
-2. **Base Directory Convention**: Every package contains a `base/` directory at its root containing the core implementation. This supports future multiple technology stack implementations while maintaining common interfaces.
+2. **Base Directory Convention (MANDATORY)**: Every package MUST contain a `base/` directory at its root containing the core implementation. This supports future multiple technology stack implementations while maintaining common interfaces.
+   - **FORBIDDEN**: Packages without `base/` directory
 
-3. **Shared Infrastructure First**: Infrastructure packages (types, utils, api-client, i18n, rest-docs) provide common functionality used by all feature packages.
+3. **Shared Infrastructure First (MANDATORY SEQUENCE)**: Infrastructure packages (types, utils, api-client, i18n, rest-docs) MUST be implemented before feature packages that depend on them.
+   - **FORBIDDEN**: Creating shared code outside of dedicated shared infrastructure packages
 
-4. **Component Library**: `universo-ng-components` eliminates code duplication across frontend packages by providing reusable Angular components.
+4. **Component Library (MANDATORY)**: `universo-ng-components` eliminates code duplication across frontend packages by providing reusable Angular components.
+   - **FORBIDDEN**: Duplicating UI components across packages instead of using shared library
 
-5. **Authentication Packages**: Separated into `auth-frt` (Angular UI) and `auth-srv` (Go backend) as foundational services for all features requiring authentication.
+5. **Authentication Packages (MANDATORY SEPARATION)**: Separated into `auth-frt` (Angular UI) and `auth-srv` (Go backend) as foundational services.
+   - **FORBIDDEN**: Combining frontend and backend in single package when they should be separate
 
-6. **Future Extensibility**: Package structure supports eventual extraction to separate repositories while maintaining base packages in the monorepo.
+6. **Future Extensibility (STRATEGIC GOAL)**: Package structure supports eventual extraction to separate repositories while maintaining base packages in the monorepo.
+   - **REQUIREMENT**: Every package MUST be designed to be repository-independent from day one
+
+**Migration Path Verification**: Each package in this structure can be moved to a separate repository with:
+- Zero code refactoring required
+- Only package.json dependency updates needed
+- Preserved test coverage and documentation
+- Maintained public API contracts
 
 ## Complexity Tracking
 
@@ -347,10 +431,14 @@ This is a **monorepo with multiple packages** structure. The project uses PNPM w
 All constitution principles are satisfied:
 - Monorepo organization with PNPM ✅
 - Package-first development with clear boundaries ✅
+- **ABSOLUTE MODULAR IMPLEMENTATION** - All code in packages/ ✅
 - Bilingual documentation (English/Russian) ✅
 - Correct technology stack (Angular/Gin/Supabase) ✅
 - Following GitHub workflow guidelines ✅
 - Incremental feature development pattern ✅
 - Specification-driven development ✅
+- **NO FORBIDDEN IMPLEMENTATIONS** planned ✅
+
+**Verification**: This plan follows Constitution v1.0.3 with absolute adherence to modular package-based architecture.
 
 No complexity justification required.
