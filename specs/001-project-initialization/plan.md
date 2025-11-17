@@ -18,16 +18,16 @@ Initialize Universo Platformo Angular as a monorepo with PNPM workspace manageme
 
 **Primary Dependencies**: 
 - Frontend: Angular, Angular Material, ngx-translate, RxJS
-- Backend: Gin, Supabase Go client, JWT authentication library
-- Build: PNPM 8+, NEEDS CLARIFICATION (Nx vs Turbo for build orchestration)
+- Backend: Gin, supabase-community/supabase-go, appleboy/gin-jwt
+- Build: PNPM 8+, Nx (chosen over Turbo for Angular+Go support)
 - Database: Supabase (PostgreSQL-based with REST/realtime APIs)
 
 **Storage**: Supabase (PostgreSQL), with abstraction layer for future DBMS expansion
 
 **Testing**: 
-- Frontend: Jasmine/Karma (Angular default) or Jest
+- Frontend: Jest (Karma deprecated as of Angular 16)
 - Backend: Go testing package, table-driven tests
-- E2E: NEEDS CLARIFICATION (Playwright vs Cypress)
+- E2E: Playwright (chosen for cross-browser support)
 
 **Target Platform**: 
 - Frontend: Modern browsers (Chrome, Firefox, Safari, Edge)
@@ -79,7 +79,10 @@ Initialize Universo Platformo Angular as a monorepo with PNPM workspace manageme
 - **Check**: Backend: Gin framework with Go
 - **Check**: Database: Supabase (primary) with abstraction for future expansion
 - **Check**: Package Management: PNPM with workspace and catalog support
-- **Check**: Build Orchestration: NEEDS CLARIFICATION (Nx vs Turbo) - to be resolved in Phase 0
+- **Check**: Build Orchestration: Nx (selected for Angular+Go monorepo support)
+- **Check**: Frontend Testing: Jest (Karma deprecated)
+- **Check**: E2E Testing: Playwright (cross-browser support)
+- **Check**: Go Authentication: supabase-community/supabase-go + appleboy/gin-jwt
 
 ### ✅ Principle V: GitHub Workflow Integration
 - **Status**: PASS
@@ -103,16 +106,16 @@ Initialize Universo Platformo Angular as a monorepo with PNPM workspace manageme
 - **Check**: User stories have clear priorities (P1-P5) and acceptance criteria
 
 ### Required Technologies Check
-- **Status**: PASS with CLARIFICATIONS NEEDED
+- **Status**: PASS - All clarifications resolved
 - ✅ Angular (latest stable) with TypeScript
 - ✅ Angular Material for UI components
 - ✅ Gin framework for Go backend
 - ✅ Supabase for database
 - ✅ Go-based authentication with Supabase connector
 - ✅ PNPM with workspace and catalog
-- ⚠️ **NEEDS CLARIFICATION**: Nx vs Turbo for build orchestration
-- ⚠️ **NEEDS CLARIFICATION**: Jest vs Jasmine/Karma for frontend testing
-- ⚠️ **NEEDS CLARIFICATION**: E2E testing framework (Playwright vs Cypress)
+- ✅ **RESOLVED**: Nx for build orchestration (selected over Turbo)
+- ✅ **RESOLVED**: Jest for frontend testing (Karma deprecated)
+- ✅ **RESOLVED**: Playwright for E2E testing (selected over Cypress)
 - ✅ ngx-translate for internationalization
 
 ### Architecture Constraints Check
@@ -133,13 +136,17 @@ Initialize Universo Platformo Angular as a monorepo with PNPM workspace manageme
 - ✅ No AI agent configuration files will be created (user-managed)
 
 ### Overall Gate Status
-**CONDITIONAL PASS** - Proceed to Phase 0 research to resolve:
-1. Build orchestration tool selection (Nx vs Turbo)
-2. Frontend testing framework selection
-3. E2E testing framework selection
-4. Go authentication library selection for Supabase integration
+**PASS** ✅ - All constitution principles satisfied and technical decisions made.
 
-All constitutional principles are aligned. Clarifications needed are technical decisions, not violations.
+Phase 0 research completed with all clarifications resolved:
+1. ✅ Build orchestration: **Nx** (best Angular+Go support, enterprise features)
+2. ✅ Frontend testing: **Jest** (Karma deprecated, better performance)
+3. ✅ E2E testing: **Playwright** (cross-browser support, scalability)
+4. ✅ Go authentication: **supabase-go + gin-jwt** (official libraries, best practices)
+
+**Ready to proceed to Phase 1: Design & Contracts**
+
+See `research.md` for detailed rationale and alternatives considered for each decision.
 
 ## Project Structure
 
