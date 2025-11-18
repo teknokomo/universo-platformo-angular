@@ -81,6 +81,7 @@ pnpm dev
 ## 📚 Documentation
 
 - **Constitution**: `.specify/memory/constitution.md` - Project governance and architectural principles
+- **Best Practices**: `BEST-PRACTICES.md` / `BEST-PRACTICES-RU.md` - Angular and Gin technology stack best practices
 - **Specifications**: `specs/` - Feature specifications and implementation plans
 - **Package READMEs**: Each package has its own detailed documentation
 
@@ -120,4 +121,4 @@ Please read the contribution guidelines in `.github/instructions/` before submit
 
 ---
 
-**Architecture Version**: Constitution v1.0.3 | **Last Updated**: 2025-11-17
+**Architecture Version**: Constitution v1.0.4 | **Last Updated**: 2025-11-18
