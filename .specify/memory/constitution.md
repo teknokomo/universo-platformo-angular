@@ -1,4 +1,37 @@
 <!--
+Sync Impact Report - Constitution v1.0.4
+========================================
+Version Change: v1.0.3 → v1.0.4 (PATCH - Added Technology Stack Best Practices)
+Modified Principles: IV (added explicit Angular and Gin best practices requirements)
+Modified Sections: Technology Stack & Architecture (added references to best practices documents)
+Changes Made:
+  - Principle IV: Added explicit Angular-specific requirements (standalone components, inject(), signals)
+  - Principle IV: Added explicit Go/Gin-specific requirements (Clean Architecture, internal/, middleware)
+  - Technology Stack: Added reference to BEST-PRACTICES.md and BEST-PRACTICES-RU.md
+  - Documentation: Created comprehensive BEST-PRACTICES.md with Angular and Gin patterns
+  - Documentation: Created BEST-PRACTICES-RU.md as exact Russian translation
+Review Status:
+  ✅ Based on research of Angular monorepo patterns with Nx
+  ✅ Based on research of Go/Gin microservices best practices
+  ✅ Incorporates modern Angular 17+ standalone components
+  ✅ Incorporates Clean Architecture patterns for Go/Gin
+  ✅ Verified alignment with universo-platformo-react conceptual patterns
+Impact Analysis:
+  - PATCH version bump (clarifications and documentation additions)
+  - Adds explicit technology-specific requirements to constitution
+  - Creates comprehensive best practices documentation (77 pages)
+  - No breaking changes to existing principles
+  - Strengthens guidance for Angular and Gin implementations
+Templates Status:
+  ✅ spec-template.md - Aligns with constitution
+  ✅ plan-template.md - Aligns with constitution
+  ✅ tasks-template.md - Aligns with constitution
+  ✅ BEST-PRACTICES.md - New comprehensive guide created
+  ✅ BEST-PRACTICES-RU.md - New Russian translation created
+Follow-up TODOs: None - Constitution now includes technology stack best practices
+-->
+
+<!--
 Sync Impact Report - Constitution v1.0.3
 ========================================
 Version Change: v1.0.2 → v1.0.3 (MINOR - Strengthened Modularity Requirements)
@@ -137,6 +170,22 @@ ALL documentation files (README, guides, specifications) MUST be created in both
 **Package Management**: PNPM for workspace management
 
 The project MUST follow best practices specific to Angular and Gin frameworks. Implementation MUST NOT blindly copy patterns from the React reference implementation but instead adopt idiomatic patterns for the chosen stack.
+
+**Angular-Specific Requirements**:
+- Use standalone components (Angular 17+)
+- Use modern `inject()` function for dependency injection
+- Implement lazy loading for all feature packages
+- Use Angular Signals for reactive state management
+- Use Angular Material for all UI components
+
+**Go/Gin-Specific Requirements**:
+- Follow Clean Architecture (Handler → Service → Repository pattern)
+- Use `internal/` directory for package-private code
+- Implement middleware for cross-cutting concerns
+- Use environment-based configuration
+- Generate OpenAPI documentation for all APIs
+
+**Documentation**: See `BEST-PRACTICES.md` and `BEST-PRACTICES-RU.md` for comprehensive technology-specific guidelines.
 
 **Rationale**: Using established frameworks and best practices reduces learning curve, improves maintainability, and leverages community support. Stack-specific patterns ensure optimal performance and developer experience.
 
@@ -289,4 +338,4 @@ Any deviation from these principles MUST be explicitly justified in the pull req
 
 **Note**: Deviations from the FORBIDDEN Implementations list are **NEVER** acceptable and CANNOT be justified under any circumstances.
 
-**Version**: 1.0.3 | **Ratified**: 2025-11-16 | **Last Amended**: 2025-11-17
+**Version**: 1.0.4 | **Ratified**: 2025-11-16 | **Last Amended**: 2025-11-18
