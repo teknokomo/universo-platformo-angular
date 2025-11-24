@@ -185,7 +185,7 @@ The project MUST follow best practices specific to Angular and Gin frameworks. I
 - Use environment-based configuration
 - Generate OpenAPI documentation for all APIs
 
-**Documentation**: See `BEST-PRACTICES.md` and `BEST-PRACTICES-RU.md` for comprehensive technology-specific guidelines.
+**Documentation**: See `.specify/memory/BEST-PRACTICES.md` and `.specify/memory/BEST-PRACTICES-RU.md` for comprehensive technology-specific guidelines.
 
 **Rationale**: Using established frameworks and best practices reduces learning curve, improves maintainability, and leverages community support. Stack-specific patterns ensure optimal performance and developer experience.
 
