@@ -80,10 +80,16 @@ pnpm dev
 
 ## 📚 Documentation
 
+All project documentation has been centralized in the `.specify/` directory:
+
 - **Constitution**: `.specify/memory/constitution.md` - Project governance and architectural principles
-- **Best Practices**: `BEST-PRACTICES.md` / `BEST-PRACTICES-RU.md` - Angular and Gin technology stack best practices
-- **Specifications**: `specs/` - Feature specifications and implementation plans
+- **Best Practices**: `.specify/memory/BEST-PRACTICES.md` / `.specify/memory/BEST-PRACTICES-RU.md` - Angular and Gin technology stack best practices
+- **Specifications**: `.specify/specs/` - Feature specifications and implementation plans
+- **Templates**: `.specify/templates/` - Document templates for specs, plans, and tasks
+- **Scripts**: `.specify/scripts/` - Automation scripts for the development workflow
 - **Package READMEs**: Each package has its own detailed documentation
+
+See `.specify/README.md` for complete documentation structure details.
 
 ## 🌍 Bilingual Support
 
