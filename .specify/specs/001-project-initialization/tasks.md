@@ -1,11 +1,18 @@
 # Tasks: Universo Platformo Angular - Project Initialization
 
 **Input**: Design documents from `.specify/specs/001-project-initialization/`
-**Prerequisites**: plan.md, spec.md, research.md, data-model.md, contracts/auth-api.md
+**Prerequisites**: plan.md, spec.md, research.md, data-model.md, contracts/auth-api.md, architecture-comparison.md
 
 **Tests**: No explicit test requirements were requested in the feature specification. This task list focuses on implementation.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+
+**Architecture Patterns**: This task list incorporates enhanced package structure patterns from architecture-comparison.md analysis of universo-platformo-react, including:
+- Package-level assets/ directories for icons and images
+- Package-level i18n/ directories with en/ru subdirectories for translations
+- Backend validators/ directories for input validation logic
+- Backend configs/ directories for configuration constants
+- Bilingual README files (README.md and README-RU.md) for every package
 
 ## Format: `[ID] [P?] [Story] Description`
 
@@ -51,12 +58,14 @@
 
 ### Shared Infrastructure Packages
 
-- [ ] T015 [P] Create universo-types package structure in packages/universo-types/base/
-- [ ] T016 [P] Create universo-utils package structure in packages/universo-utils/base/
-- [ ] T017 [P] Create universo-api-client package structure in packages/universo-api-client/base/
-- [ ] T018 [P] Create universo-i18n package structure in packages/universo-i18n/base/
-- [ ] T019 [P] Create universo-rest-docs package structure in packages/universo-rest-docs/base/
-- [ ] T020 [P] Create universo-ng-components package structure in packages/universo-ng-components/base/
+**Note**: Following enhanced package structure from architecture-comparison.md analysis of universo-platformo-react patterns
+
+- [ ] T015 [P] Create universo-types package structure with standard directories in packages/universo-types/base/
+- [ ] T016 [P] Create universo-utils package structure with standard directories in packages/universo-utils/base/
+- [ ] T017 [P] Create universo-api-client package structure with standard directories in packages/universo-api-client/base/
+- [ ] T018 [P] Create universo-i18n package structure with locales subdirectories in packages/universo-i18n/base/
+- [ ] T019 [P] Create universo-rest-docs package structure with swagger subdirectory in packages/universo-rest-docs/base/
+- [ ] T020 [P] Create universo-ng-components package structure with assets and i18n subdirectories in packages/universo-ng-components/base/
 
 ### universo-types Package Implementation
 
@@ -130,8 +139,8 @@
 - [ ] T073 [P] Create shared pipes directory structure in packages/universo-ng-components/base/src/lib/pipes/
 - [ ] T074 [P] Create shared directives directory structure in packages/universo-ng-components/base/src/lib/directives/
 - [ ] T075 [P] Create shared services directory structure in packages/universo-ng-components/base/src/lib/services/
-- [ ] T076 Setup assets directory structure in packages/universo-ng-components/base/src/assets/
-- [ ] T077 Setup i18n directory structure in packages/universo-ng-components/base/src/i18n/
+- [ ] T076 Setup assets directory structure (icons/, images/) in packages/universo-ng-components/base/src/assets/
+- [ ] T077 Setup i18n directory structure (en/, ru/) with translation.json files in packages/universo-ng-components/base/src/i18n/
 - [ ] T078 [P] Create English README for universo-ng-components in packages/universo-ng-components/base/README.md
 - [ ] T079 [P] Create Russian README for universo-ng-components in packages/universo-ng-components/base/README-RU.md
 - [ ] T080 Build universo-ng-components package
@@ -230,6 +239,8 @@
 
 ### Authentication Frontend Package (auth-frt)
 
+**Note**: Following enhanced package structure with assets/ and i18n/ directories for package-level resources
+
 - [ ] T124 [US4] Create Angular library package for auth-frt using Nx in packages/auth-frt/base/
 - [ ] T125 [US4] Create ng-package.json for auth-frt in packages/auth-frt/base/ng-package.json
 - [ ] T126 [US4] Create package.json for auth-frt with dependencies (Angular, RxJS, universo-types, universo-api-client, universo-i18n) in packages/auth-frt/base/package.json
@@ -241,48 +252,51 @@
 - [ ] T132 [P] [US4] Create SignUpFormComponent in packages/auth-frt/base/src/lib/components/signup-form/signup-form.component.ts
 - [ ] T133 [P] [US4] Create LogoutButtonComponent in packages/auth-frt/base/src/lib/components/logout-button/logout-button.component.ts
 - [ ] T134 [P] [US4] Create UserProfileComponent in packages/auth-frt/base/src/lib/components/user-profile/user-profile.component.ts
-- [ ] T135 [US4] Create English translations for auth-frt in packages/auth-frt/base/src/i18n/en/translations.json
-- [ ] T136 [US4] Create Russian translations for auth-frt in packages/auth-frt/base/src/i18n/ru/translations.json
-- [ ] T137 [US4] Create public-api.ts barrel export for auth-frt in packages/auth-frt/base/src/public-api.ts
-- [ ] T138 [P] [US4] Create English README for auth-frt in packages/auth-frt/base/README.md
-- [ ] T139 [P] [US4] Create Russian README for auth-frt in packages/auth-frt/base/README-RU.md
-- [ ] T140 [US4] Build auth-frt package
+- [ ] T135 [US4] Setup assets directory with auth icons in packages/auth-frt/base/src/assets/icons/
+- [ ] T136 [US4] Create English translations for auth-frt in packages/auth-frt/base/src/i18n/en/translations.json
+- [ ] T137 [US4] Create Russian translations for auth-frt in packages/auth-frt/base/src/i18n/ru/translations.json
+- [ ] T138 [US4] Create public-api.ts barrel export for auth-frt in packages/auth-frt/base/src/public-api.ts
+- [ ] T139 [P] [US4] Create English README for auth-frt in packages/auth-frt/base/README.md
+- [ ] T140 [P] [US4] Create Russian README for auth-frt in packages/auth-frt/base/README-RU.md
+- [ ] T141 [US4] Build auth-frt package
 
 ### Authentication Backend Package (auth-srv)
 
-- [ ] T141 [US4] Create Go module for auth-srv in packages/auth-srv/base/
-- [ ] T142 [US4] Initialize go.mod for auth-srv in packages/auth-srv/base/go.mod
-- [ ] T143 [US4] Create main server entry point in packages/auth-srv/base/cmd/server/main.go
-- [ ] T144 [US4] Add dependencies (Gin, supabase-go, gin-jwt, golang-jwt) to go.mod
-- [ ] T145 [P] [US4] Implement SignUpHandler in packages/auth-srv/base/internal/handlers/signup.go
-- [ ] T146 [P] [US4] Implement SignInHandler in packages/auth-srv/base/internal/handlers/signin.go
-- [ ] T147 [P] [US4] Implement SignOutHandler in packages/auth-srv/base/internal/handlers/signout.go
-- [ ] T148 [P] [US4] Implement RefreshTokenHandler in packages/auth-srv/base/internal/handlers/refresh.go
-- [ ] T149 [P] [US4] Implement GetSessionHandler in packages/auth-srv/base/internal/handlers/session.go
-- [ ] T150 [US4] Implement AuthMiddleware for JWT validation in packages/auth-srv/base/internal/middleware/auth.go
-- [ ] T151 [US4] Implement CORS middleware in packages/auth-srv/base/internal/middleware/cors.go
-- [ ] T152 [US4] Implement logging middleware in packages/auth-srv/base/internal/middleware/logger.go
-- [ ] T153 [US4] Implement recovery middleware (panic handling) in packages/auth-srv/base/internal/middleware/recovery.go
-- [ ] T154 [US4] Implement AuthService for business logic in packages/auth-srv/base/internal/services/auth_service.go
-- [ ] T155 [US4] Implement SessionService in packages/auth-srv/base/internal/services/session_service.go
-- [ ] T156 [US4] Implement Supabase client wrapper in packages/auth-srv/base/internal/repository/supabase.go
-- [ ] T157 [P] [US4] Implement request validators in packages/auth-srv/base/internal/validators/auth_validators.go
-- [ ] T158 [US4] Implement configuration loader in packages/auth-srv/base/internal/configs/config.go
-- [ ] T159 [US4] Setup router with all auth endpoints in packages/auth-srv/base/internal/routes/routes.go
-- [ ] T160 [US4] Implement health check endpoint in packages/auth-srv/base/internal/handlers/health.go
-- [ ] T161 [P] [US4] Create English README for auth-srv in packages/auth-srv/base/README.md
-- [ ] T162 [P] [US4] Create Russian README for auth-srv in packages/auth-srv/base/README-RU.md
-- [ ] T163 [US4] Build auth-srv package
+**Note**: Following enhanced package structure with validators/ and configs/ directories for better organization
+
+- [ ] T142 [US4] Create Go module for auth-srv in packages/auth-srv/base/
+- [ ] T143 [US4] Initialize go.mod for auth-srv in packages/auth-srv/base/go.mod
+- [ ] T144 [US4] Create main server entry point in packages/auth-srv/base/cmd/server/main.go
+- [ ] T145 [US4] Add dependencies (Gin, supabase-go, gin-jwt, golang-jwt) to go.mod
+- [ ] T146 [P] [US4] Implement SignUpHandler in packages/auth-srv/base/internal/handlers/signup.go
+- [ ] T147 [P] [US4] Implement SignInHandler in packages/auth-srv/base/internal/handlers/signin.go
+- [ ] T148 [P] [US4] Implement SignOutHandler in packages/auth-srv/base/internal/handlers/signout.go
+- [ ] T149 [P] [US4] Implement RefreshTokenHandler in packages/auth-srv/base/internal/handlers/refresh.go
+- [ ] T150 [P] [US4] Implement GetSessionHandler in packages/auth-srv/base/internal/handlers/session.go
+- [ ] T151 [US4] Implement AuthMiddleware for JWT validation in packages/auth-srv/base/internal/middleware/auth.go
+- [ ] T152 [US4] Implement CORS middleware in packages/auth-srv/base/internal/middleware/cors.go
+- [ ] T153 [US4] Implement logging middleware in packages/auth-srv/base/internal/middleware/logger.go
+- [ ] T154 [US4] Implement recovery middleware (panic handling) in packages/auth-srv/base/internal/middleware/recovery.go
+- [ ] T155 [US4] Implement AuthService for business logic in packages/auth-srv/base/internal/services/auth_service.go
+- [ ] T156 [US4] Implement SessionService in packages/auth-srv/base/internal/services/session_service.go
+- [ ] T157 [US4] Implement Supabase client wrapper in packages/auth-srv/base/internal/repository/supabase.go
+- [ ] T158 [P] [US4] Implement request validators in packages/auth-srv/base/internal/validators/auth_validators.go
+- [ ] T159 [US4] Implement configuration loader in packages/auth-srv/base/internal/configs/config.go
+- [ ] T160 [US4] Setup router with all auth endpoints in packages/auth-srv/base/internal/routes/routes.go
+- [ ] T161 [US4] Implement health check endpoint in packages/auth-srv/base/internal/handlers/health.go
+- [ ] T162 [P] [US4] Create English README for auth-srv in packages/auth-srv/base/README.md
+- [ ] T163 [P] [US4] Create Russian README for auth-srv in packages/auth-srv/base/README-RU.md
+- [ ] T164 [US4] Build auth-srv package
 
 ### Authentication Integration and Testing
 
-- [ ] T164 [US4] Update .env.example with Supabase configuration variables
-- [ ] T165 [US4] Document Supabase setup process in quickstart.md
-- [ ] T166 [US4] Update universo-rest-docs with complete auth API OpenAPI specification
-- [ ] T167 [US4] Create integration example showing auth-frt + auth-srv usage
-- [ ] T168 [US4] Document authentication flow (sign up → confirm email → sign in → access protected routes) in auth packages READMEs
-- [ ] T169 [US4] Document JWT token handling and refresh mechanism
-- [ ] T170 [US4] Test complete authentication flow end-to-end
+- [ ] T165 [US4] Update .env.example with Supabase configuration variables
+- [ ] T166 [US4] Document Supabase setup process in quickstart.md
+- [ ] T167 [US4] Update universo-rest-docs with complete auth API OpenAPI specification
+- [ ] T168 [US4] Create integration example showing auth-frt + auth-srv usage
+- [ ] T169 [US4] Document authentication flow (sign up → confirm email → sign in → access protected routes) in auth packages READMEs
+- [ ] T170 [US4] Document JWT token handling and refresh mechanism
+- [ ] T171 [US4] Test complete authentication flow end-to-end
 
 **Checkpoint**: At this point, User Stories 1-4 should all work - authentication system is functional with Supabase integration
 
@@ -296,26 +310,26 @@
 
 ### Implementation for User Story 5
 
-- [ ] T171 [US5] Install Angular Material and dependencies in root package.json
-- [ ] T172 [US5] Add Angular Material to PNPM catalog in pnpm-workspace.yaml
-- [ ] T173 [US5] Create shared theme configuration in packages/universo-ng-components/base/src/lib/theme/
-- [ ] T174 [US5] Define primary, accent, and warn color palettes in theme configuration
-- [ ] T175 [US5] Configure Angular Material typography in theme
-- [ ] T176 [US5] Setup global Material styles in universo-ng-components
-- [ ] T177 [P] [US5] Create reusable Material dialog wrapper component in packages/universo-ng-components/base/src/lib/components/dialog/
-- [ ] T178 [P] [US5] Create reusable Material card component in packages/universo-ng-components/base/src/lib/components/card/
-- [ ] T179 [P] [US5] Create reusable Material form field component in packages/universo-ng-components/base/src/lib/components/form-field/
-- [ ] T180 [P] [US5] Create reusable Material button component in packages/universo-ng-components/base/src/lib/components/button/
-- [ ] T181 [P] [US5] Create reusable Material table component in packages/universo-ng-components/base/src/lib/components/table/
-- [ ] T182 [US5] Create Material icon registry service in packages/universo-ng-components/base/src/lib/services/icon-registry.service.ts
-- [ ] T183 [US5] Configure responsive breakpoints using Material CDK in universo-ng-components
-- [ ] T184 [US5] Create example page demonstrating Material components in auth-frt
-- [ ] T185 [US5] Update auth-frt login and signup forms to use Material components
-- [ ] T186 [US5] Document Material theme customization in universo-ng-components README
-- [ ] T187 [US5] Document available shared Material components in universo-ng-components README
-- [ ] T188 [US5] Update universo-ng-components package with Material setup instructions
-- [ ] T189 [US5] Test Material components across Chrome, Firefox, and Safari
-- [ ] T190 [US5] Verify responsive behavior on different viewport sizes
+- [ ] T172 [US5] Install Angular Material and dependencies in root package.json
+- [ ] T173 [US5] Add Angular Material to PNPM catalog in pnpm-workspace.yaml
+- [ ] T174 [US5] Create shared theme configuration in packages/universo-ng-components/base/src/lib/theme/
+- [ ] T175 [US5] Define primary, accent, and warn color palettes in theme configuration
+- [ ] T176 [US5] Configure Angular Material typography in theme
+- [ ] T177 [US5] Setup global Material styles in universo-ng-components
+- [ ] T178 [P] [US5] Create reusable Material dialog wrapper component in packages/universo-ng-components/base/src/lib/components/dialog/
+- [ ] T179 [P] [US5] Create reusable Material card component in packages/universo-ng-components/base/src/lib/components/card/
+- [ ] T180 [P] [US5] Create reusable Material form field component in packages/universo-ng-components/base/src/lib/components/form-field/
+- [ ] T181 [P] [US5] Create reusable Material button component in packages/universo-ng-components/base/src/lib/components/button/
+- [ ] T182 [P] [US5] Create reusable Material table component in packages/universo-ng-components/base/src/lib/components/table/
+- [ ] T183 [US5] Create Material icon registry service in packages/universo-ng-components/base/src/lib/services/icon-registry.service.ts
+- [ ] T184 [US5] Configure responsive breakpoints using Material CDK in universo-ng-components
+- [ ] T185 [US5] Create example page demonstrating Material components in auth-frt
+- [ ] T186 [US5] Update auth-frt login and signup forms to use Material components
+- [ ] T187 [US5] Document Material theme customization in universo-ng-components README
+- [ ] T188 [US5] Document available shared Material components in universo-ng-components README
+- [ ] T189 [US5] Update universo-ng-components package with Material setup instructions
+- [ ] T190 [US5] Test Material components across Chrome, Firefox, and Safari
+- [ ] T191 [US5] Verify responsive behavior on different viewport sizes
 
 **Checkpoint**: All user stories should now be independently functional - developers can use Material UI for building interfaces
 
@@ -325,26 +339,27 @@
 
 **Purpose**: Improvements that affect multiple user stories and final validation
 
-- [ ] T191 [P] Create comprehensive architecture documentation in docs/ referencing universo-platformo-react patterns
-- [ ] T192 [P] Create migration guide from React patterns to Angular/Go patterns
-- [ ] T193 [P] Document three-entity pattern (Clusters/Domains/Resources structure) for future features
-- [ ] T194 [P] Setup CI/CD workflows in .github/workflows/ (build, test, lint)
-- [ ] T195 [P] Configure ESLint and Prettier for TypeScript packages
-- [ ] T196 [P] Configure golangci-lint for Go packages
-- [ ] T197 Setup pre-commit hooks for linting and formatting
-- [ ] T198 Create GitHub issue templates at .github/ISSUE_TEMPLATE/
-- [ ] T199 Create pull request template at .github/PULL_REQUEST_TEMPLATE.md
-- [ ] T200 Verify all bilingual documentation has identical structure (line count matching)
-- [ ] T201 Run full build of all packages in correct order
-- [ ] T202 Validate PNPM workspace dependencies resolve correctly
-- [ ] T203 Test hot-reload functionality for frontend and backend
-- [ ] T204 Verify Nx affected commands work correctly
-- [ ] T205 Test complete authentication flow end-to-end
-- [ ] T206 Validate Material UI components render correctly
-- [ ] T207 Review and update all package READMEs for completeness
-- [ ] T208 Run quickstart.md validation on clean environment
-- [ ] T209 Create release checklist document
-- [ ] T210 Final verification of constitution compliance (all code in packages/, no forbidden patterns)
+- [ ] T192 [P] Create comprehensive architecture documentation referencing universo-platformo-react patterns and architecture-comparison.md
+- [ ] T193 [P] Create migration guide from React patterns to Angular/Go patterns
+- [ ] T194 [P] Document three-entity pattern (Clusters/Domains/Resources structure) for future features
+- [ ] T195 [P] Setup CI/CD workflows in .github/workflows/ (build, test, lint)
+- [ ] T196 [P] Configure ESLint and Prettier for TypeScript packages
+- [ ] T197 [P] Configure golangci-lint for Go packages
+- [ ] T198 Setup pre-commit hooks for linting and formatting
+- [ ] T199 Create GitHub issue templates at .github/ISSUE_TEMPLATE/
+- [ ] T200 Create pull request template at .github/PULL_REQUEST_TEMPLATE.md
+- [ ] T201 Verify all bilingual documentation has identical structure (line count matching)
+- [ ] T202 Run full build of all packages in correct order
+- [ ] T203 Validate PNPM workspace dependencies resolve correctly
+- [ ] T204 Test hot-reload functionality for frontend and backend
+- [ ] T205 Verify Nx affected commands work correctly
+- [ ] T206 Test complete authentication flow end-to-end
+- [ ] T207 Validate Material UI components render correctly
+- [ ] T208 Review and update all package READMEs for completeness
+- [ ] T209 Run quickstart.md validation on clean environment
+- [ ] T210 Create release checklist document
+- [ ] T211 Final verification of constitution compliance (all code in packages/, no forbidden patterns)
+- [ ] T212 Verify package structure follows architecture-comparison.md patterns (assets/, i18n/, validators/, configs/)
 
 ---
 
@@ -495,15 +510,15 @@ With multiple developers:
 
 ## Summary Statistics
 
-- **Total Tasks**: 210
+- **Total Tasks**: 212 (updated from 210)
 - **Setup Phase**: 14 tasks
 - **Foundational Phase**: 66 tasks (shared infrastructure)
 - **User Story 1**: 14 tasks (Repository documentation)
 - **User Story 2**: 14 tasks (Package infrastructure)
 - **User Story 3**: 15 tasks (Development environment)
-- **User Story 4**: 47 tasks (Authentication - frontend + backend)
+- **User Story 4**: 48 tasks (Authentication - frontend + backend) - updated from 47
 - **User Story 5**: 20 tasks (Material UI)
-- **Polish Phase**: 20 tasks (Cross-cutting concerns)
+- **Polish Phase**: 22 tasks (Cross-cutting concerns) - updated from 20
 
 **Parallel Opportunities**: 
 - Setup: 5 parallel tasks
@@ -520,5 +535,13 @@ With multiple developers:
 **Suggested Delivery Order**:
 1. **Sprint 1**: Setup + Foundational (T001-T080) - Foundation
 2. **Sprint 2**: User Story 1 + User Story 2 (T081-T108) - Documentation & Patterns
-3. **Sprint 3**: User Story 3 + User Story 4 (T109-T170) - Dev Environment & Auth
-4. **Sprint 4**: User Story 5 + Polish (T171-T210) - UI & Production Ready
+3. **Sprint 3**: User Story 3 + User Story 4 (T109-T171) - Dev Environment & Auth
+4. **Sprint 4**: User Story 5 + Polish (T172-T212) - UI & Production Ready
+
+**Architecture Enhancements** (from architecture-comparison.md):
+- ✅ Package-level assets/ directories for icons and images
+- ✅ Package-level i18n/ directories with en/ru subdirectories
+- ✅ Backend validators/ directories for input validation
+- ✅ Backend configs/ directories for configuration constants
+- ✅ Bilingual README files for all packages
+- ✅ Enhanced package structure patterns from universo-platformo-react analysis
