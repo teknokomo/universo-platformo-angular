@@ -142,16 +142,15 @@ universo-platformo-angular/
 ├── .specify/                   # Specification system
 │   ├── memory/                # Project memory and constitution
 │   ├── scripts/               # Specification scripts
+│   ├── specs/                 # Feature specifications
+│   │   └── 001-project-initialization/
+│   │       ├── spec.md        # Feature specification
+│   │       ├── plan.md        # Implementation plan
+│   │       ├── research.md    # Research findings
+│   │       ├── data-model.md  # Data models
+│   │       ├── quickstart.md  # This guide
+│   │       └── contracts/     # API contracts
 │   └── templates/             # Templates for specs and plans
-│
-├── specs/                      # Feature specifications
-│   └── 001-project-initialization/
-│       ├── spec.md            # Feature specification
-│       ├── plan.md            # Implementation plan
-│       ├── research.md        # Research findings
-│       ├── data-model.md      # Data models
-│       ├── quickstart.md      # This guide
-│       └── contracts/         # API contracts
 │
 ├── pnpm-workspace.yaml        # PNPM workspace configuration
 ├── package.json               # Root package with workspace scripts

@@ -1,6 +1,6 @@
 # Tasks: Universo Platformo Angular - Project Initialization
 
-**Input**: Design documents from `/.specify/specs/001-project-initialization/`
+**Input**: Design documents from `.specify/specs/001-project-initialization/`
 **Prerequisites**: plan.md, spec.md, research.md, data-model.md, contracts/auth-api.md
 
 **Tests**: No explicit test requirements were requested in the feature specification. This task list focuses on implementation.
