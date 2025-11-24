@@ -523,7 +523,7 @@ The specification comprehensively covers all aspects of the Universo Platformo A
 - 1 constitution document
 - **Total**: 8 comprehensive governance and specification documents
 
-All documents maintained in: `specs/001-project-initialization/`
+All documents maintained in: `.specify/specs/001-project-initialization/`
 
 ---
 

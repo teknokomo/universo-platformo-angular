@@ -428,8 +428,8 @@ See `.github/instructions/i18n-docs.md` for details.
 Now that your environment is set up:
 
 1. ✅ Read the [Constitution](.specify/memory/constitution.md) to understand project principles
-2. ✅ Explore the [specification](specs/001-project-initialization/spec.md) for project initialization
-3. ✅ Review [data models](specs/001-project-initialization/data-model.md) and [API contracts](specs/001-project-initialization/contracts/auth-api.md)
+2. ✅ Explore the [specification](.specify/specs/001-project-initialization/spec.md) for project initialization
+3. ✅ Review [data models](.specify/specs/001-project-initialization/data-model.md) and [API contracts](.specify/specs/001-project-initialization/contracts/auth-api.md)
 4. ✅ Check existing Issues and pick one to work on
 5. ✅ Start contributing! 🚀
 

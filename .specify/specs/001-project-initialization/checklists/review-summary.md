@@ -268,7 +268,7 @@ The specification is ready for the development team to begin work on Phase 1: Pr
 3. **review-summary.md** (this file) - Executive summary of findings
 4. **Updated spec.md** - Enhanced with 8 new requirements and 2 new success criteria
 
-All artifacts are located in: `specs/001-project-initialization/checklists/`
+All artifacts are located in: `.specify/specs/001-project-initialization/checklists/`
 
 ---
 
