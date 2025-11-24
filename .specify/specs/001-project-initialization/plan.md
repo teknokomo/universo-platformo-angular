@@ -1,7 +1,7 @@
 # Implementation Plan: Universo Platformo Angular - Project Initialization
 
 **Branch**: `001-project-initialization` | **Date**: 2025-11-17 | **Spec**: [spec.md](./spec.md)
-**Input**: Feature specification from `/specs/001-project-initialization/spec.md`
+**Input**: Feature specification from `.specify/specs/001-project-initialization/spec.md`
 
 **Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/commands/plan.md` for the execution workflow.
 
@@ -150,7 +150,7 @@ See `.specify/memory/constitution.md` Section "FORBIDDEN Implementations" for co
 
 ### ✅ Principle VII: Specification-Driven Development
 - **Status**: PASS
-- **Check**: Complete specification exists in `specs/001-project-initialization/spec.md`
+- **Check**: Complete specification exists in `.specify/specs/001-project-initialization/spec.md`
 - **Check**: Following `.specify/templates/spec-template.md` structure
 - **Check**: Implementation planning follows `.specify/templates/plan-template.md`
 - **Check**: User stories have clear priorities (P1-P5) and acceptance criteria

@@ -114,7 +114,7 @@ Every critical gap identified in the 120-item comprehensive checklist has been r
 
 ## Documentation Artifacts Created
 
-Total of **8 comprehensive documents** in `specs/001-project-initialization/`:
+Total of **8 comprehensive documents** in `.specify/specs/001-project-initialization/`:
 
 ### Core Documents
 1. **spec.md** - Enhanced specification v1.1 *(UPDATED)*

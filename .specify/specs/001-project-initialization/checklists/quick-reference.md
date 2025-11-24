@@ -193,10 +193,10 @@ The specification is comprehensive, well-structured, and ready for the developme
 
 ## Files Location
 
-All files are in: `specs/001-project-initialization/`
+All files are in: `.specify/specs/001-project-initialization/`
 
 ```
-specs/001-project-initialization/
+.specify/specs/001-project-initialization/
 ├── spec.md                          # Main specification v1.1 (ENHANCED)
 └── checklists/
     ├── requirements.md              # Quality checklist (UPDATED)

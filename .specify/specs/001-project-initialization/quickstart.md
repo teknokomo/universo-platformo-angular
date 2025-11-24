@@ -142,16 +142,15 @@ universo-platformo-angular/
 ├── .specify/                   # Specification system
 │   ├── memory/                # Project memory and constitution
 │   ├── scripts/               # Specification scripts
+│   ├── specs/                 # Feature specifications
+│   │   └── 001-project-initialization/
+│   │       ├── spec.md        # Feature specification
+│   │       ├── plan.md        # Implementation plan
+│   │       ├── research.md    # Research findings
+│   │       ├── data-model.md  # Data models
+│   │       ├── quickstart.md  # This guide
+│   │       └── contracts/     # API contracts
 │   └── templates/             # Templates for specs and plans
-│
-├── specs/                      # Feature specifications
-│   └── 001-project-initialization/
-│       ├── spec.md            # Feature specification
-│       ├── plan.md            # Implementation plan
-│       ├── research.md        # Research findings
-│       ├── data-model.md      # Data models
-│       ├── quickstart.md      # This guide
-│       └── contracts/         # API contracts
 │
 ├── pnpm-workspace.yaml        # PNPM workspace configuration
 ├── package.json               # Root package with workspace scripts
@@ -428,8 +427,8 @@ See `.github/instructions/i18n-docs.md` for details.
 Now that your environment is set up:
 
 1. ✅ Read the [Constitution](.specify/memory/constitution.md) to understand project principles
-2. ✅ Explore the [specification](specs/001-project-initialization/spec.md) for project initialization
-3. ✅ Review [data models](specs/001-project-initialization/data-model.md) and [API contracts](specs/001-project-initialization/contracts/auth-api.md)
+2. ✅ Explore the [specification](.specify/specs/001-project-initialization/spec.md) for project initialization
+3. ✅ Review [data models](.specify/specs/001-project-initialization/data-model.md) and [API contracts](.specify/specs/001-project-initialization/contracts/auth-api.md)
 4. ✅ Check existing Issues and pick one to work on
 5. ✅ Start contributing! 🚀
 
