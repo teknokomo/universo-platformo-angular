@@ -308,6 +308,85 @@ interface Translation {
 
 ---
 
+## Repository Interfaces
+
+The following interfaces define the data access layer abstraction (FR-030). These interfaces isolate database-specific code and enable future addition of other database providers without modifying feature code.
+
+### AuthRepository Interface
+
+**Purpose**: Data access for authentication operations
+
+**Go Interface Definition**:
+```go
+// AuthRepository defines the interface for authentication data operations
+type AuthRepository interface {
+    // FindUserByID retrieves a user by their unique identifier
+    FindUserByID(ctx context.Context, id string) (*User, error)
+    
+    // FindUserByEmail retrieves a user by their email address
+    FindUserByEmail(ctx context.Context, email string) (*User, error)
+    
+    // CreateUser creates a new user account
+    CreateUser(ctx context.Context, req *CreateUserRequest) (*User, error)
+    
+    // UpdateUser updates an existing user's profile
+    UpdateUser(ctx context.Context, id string, req *UpdateUserRequest) (*User, error)
+    
+    // DeleteUser removes a user account
+    DeleteUser(ctx context.Context, id string) error
+}
+```
+
+**TypeScript Interface Definition** (for API client):
+```typescript
+interface IAuthRepository {
+    findUserById(id: string): Promise<User | null>;
+    findUserByEmail(email: string): Promise<User | null>;
+    createUser(request: CreateUserRequest): Promise<User>;
+    updateUser(id: string, request: UpdateUserRequest): Promise<User>;
+    deleteUser(id: string): Promise<void>;
+}
+```
+
+### SessionRepository Interface
+
+**Purpose**: Data access for session management
+
+**Go Interface Definition**:
+```go
+// SessionRepository defines the interface for session data operations
+type SessionRepository interface {
+    // CreateSession creates a new user session
+    CreateSession(ctx context.Context, userID string) (*AuthSession, error)
+    
+    // GetSession retrieves an active session by token
+    GetSession(ctx context.Context, accessToken string) (*AuthSession, error)
+    
+    // RefreshSession refreshes an expired session using refresh token
+    RefreshSession(ctx context.Context, refreshToken string) (*AuthSession, error)
+    
+    // RevokeSession invalidates a session
+    RevokeSession(ctx context.Context, accessToken string) error
+    
+    // RevokeAllUserSessions invalidates all sessions for a user
+    RevokeAllUserSessions(ctx context.Context, userID string) error
+}
+```
+
+### Implementation Strategy
+
+**Supabase Implementation** (Initial):
+- `SupabaseAuthRepository` implements `AuthRepository`
+- `SupabaseSessionRepository` implements `SessionRepository`
+- Uses `supabase-community/supabase-go` client
+
+**Future Database Implementations**:
+- `PostgresAuthRepository` - Direct PostgreSQL access
+- `MongoAuthRepository` - MongoDB alternative
+- Interfaces remain unchanged; only implementations differ
+
+---
+
 ## Data Storage
 
 ### Supabase Tables
