@@ -77,18 +77,18 @@ A developer needs to integrate Supabase for data persistence and configure Passp
 
 ### User Story 5 - UI Component Library Setup (Priority: P5)
 
-A developer needs to use Material UI (MUI) components to build consistent user interfaces across the application.
+A developer needs to use Angular Material components to build consistent user interfaces across the application.
 
 **Why this priority**: UI development can begin after the basic Angular structure is in place. Initial focus should be on architecture rather than visual polish.
 
-**Independent Test**: Can be fully tested by creating sample pages using MUI components, verifying theme configuration, and ensuring components render correctly across different screen sizes.
+**Independent Test**: Can be fully tested by creating sample pages using Angular Material components, verifying theme configuration, and ensuring components render correctly across different screen sizes.
 
 **Acceptance Scenarios**:
 
-1. **Given** Angular is configured, **When** developers import MUI components, **Then** they render correctly with proper styling
-2. **Given** the application needs consistent theming, **When** MUI theme is configured, **Then** all components inherit the theme settings
-3. **Given** developers want to use MUI icons and utilities, **When** they import from MUI packages, **Then** TypeScript types are available and components work as expected
-4. **Given** responsive design is needed, **When** using MUI's responsive utilities, **Then** layouts adapt appropriately to different viewport sizes
+1. **Given** Angular is configured, **When** developers import Angular Material components, **Then** they render correctly with proper styling
+2. **Given** the application needs consistent theming, **When** Angular Material theme is configured, **Then** all components inherit the theme settings
+3. **Given** developers want to use Angular Material icons and utilities, **When** they import from Angular Material packages, **Then** TypeScript types are available and components work as expected
+4. **Given** responsive design is needed, **When** using Angular Material's responsive utilities (CDK), **Then** layouts adapt appropriately to different viewport sizes
 
 ---
 
@@ -286,7 +286,7 @@ A developer needs to use Material UI (MUI) components to build consistent user i
 - **SC-007**: Hot-reload functionality responds to code changes within 3 seconds for both frontend and backend
 - **SC-008**: Developers can find and follow repository standards (Issues, PRs, labels, i18n) without external assistance
 - **SC-009**: Authentication flow completes successfully when valid Supabase credentials are configured
-- **SC-010**: MUI components render correctly across Chrome, Firefox, and Safari browsers
+- **SC-010**: Angular Material components render correctly across Chrome, Firefox, and Safari browsers
 - **SC-011**: Repository structure is clear enough that 90% of new developers can identify where to add a new feature on first attempt
 - **SC-012**: All package naming conventions are consistently applied across the monorepo (100% compliance with `-frt`/`-srv` suffixes)
 - **SC-013**: Repository does not contain excluded items (docs/ folder, AI agent files, Flowise legacy code) maintaining 100% compliance with exclusion requirements

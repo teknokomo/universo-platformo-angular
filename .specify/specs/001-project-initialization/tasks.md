@@ -36,7 +36,9 @@
 - [ ] T001 Create root .gitignore with patterns for Node.js, Go, IDEs, and build artifacts at /home/runner/work/universo-platformo-angular/universo-platformo-angular/.gitignore
 - [ ] T002 Create root package.json with PNPM workspace scripts at /home/runner/work/universo-platformo-angular/universo-platformo-angular/package.json
 - [ ] T003 Create pnpm-workspace.yaml with catalog for centralized dependency management at /home/runner/work/universo-platformo-angular/universo-platformo-angular/pnpm-workspace.yaml
-- [ ] T004 Initialize Nx workspace configuration at /home/runner/work/universo-platformo-angular/universo-platformo-angular/nx.json
+- [ ] T004 Initialize Nx workspace configuration with affected commands, caching strategy, and project graph at /home/runner/work/universo-platformo-angular/universo-platformo-angular/nx.json
+- [ ] T004a Configure Nx parallel execution and task orchestration settings in nx.json
+- [ ] T004b [Optional] Setup Nx Cloud for remote caching (can be deferred to production optimization)
 - [ ] T005 Create .env.example with required environment variables at /home/runner/work/universo-platformo-angular/universo-platformo-angular/.env.example
 - [ ] T006 [P] Create English root README.md at /home/runner/work/universo-platformo-angular/universo-platformo-angular/README.md
 - [ ] T007 [P] Create Russian root README-RU.md (exact copy of English structure) at /home/runner/work/universo-platformo-angular/universo-platformo-angular/README-RU.md
@@ -354,12 +356,14 @@
 - [ ] T204 Test hot-reload functionality for frontend and backend
 - [ ] T205 Verify Nx affected commands work correctly
 - [ ] T206 Test complete authentication flow end-to-end
-- [ ] T207 Validate Material UI components render correctly
+- [ ] T207 Validate Angular Material components render correctly
 - [ ] T208 Review and update all package READMEs for completeness
 - [ ] T209 Run quickstart.md validation on clean environment
 - [ ] T210 Create release checklist document
 - [ ] T211 Final verification of constitution compliance (all code in packages/, no forbidden patterns)
 - [ ] T212 Verify package structure follows architecture-comparison.md patterns (assets/, i18n/, validators/, configs/)
+- [ ] T213 Create LICENSE file with Omsk Open License at /home/runner/work/universo-platformo-angular/universo-platformo-angular/LICENSE
+- [ ] T214 Document React repository sync workflow (FR-048 to FR-050) explaining process for monitoring and evaluating new features from universo-platformo-react
 
 ---
 
@@ -508,17 +512,37 @@ With multiple developers:
 
 ---
 
+## Scope Clarification
+
+**This specification covers project initialization (foundation infrastructure) only.**
+
+The Feature Development Roadmap (FR-064) mentions "First complete feature (Clusters)" as a reference pattern implementation. This first domain feature (clusters-frt/clusters-srv packages) will be specified and implemented in a **separate specification** (e.g., `002-clusters-feature`) after this initialization is complete.
+
+**Foundation tasks in this spec provide:**
+1. ✅ Complete shared infrastructure packages (universo-types, universo-utils, etc.)
+2. ✅ Complete authentication system (auth-frt, auth-srv)
+3. ✅ Angular Material component library setup
+4. ✅ Documentation, templates, and standards
+5. ✅ Build system and development environment
+
+**The following will be covered in subsequent specifications:**
+- First domain feature package (Clusters) demonstrating three-entity pattern
+- Additional domain features (Metaverses, Uniks, Spaces/Canvases)
+- Advanced features (UPDL, Publication, Templates, Multiplayer)
+
+---
+
 ## Summary Statistics
 
-- **Total Tasks**: 212 (updated from 210)
-- **Setup Phase**: 14 tasks
+- **Total Tasks**: 216 (updated to include Nx sub-tasks T004a, T004b and new tasks T213, T214)
+- **Setup Phase**: 16 tasks (including Nx configuration sub-tasks)
 - **Foundational Phase**: 66 tasks (shared infrastructure)
 - **User Story 1**: 14 tasks (Repository documentation)
 - **User Story 2**: 14 tasks (Package infrastructure)
 - **User Story 3**: 15 tasks (Development environment)
-- **User Story 4**: 48 tasks (Authentication - frontend + backend) - updated from 47
+- **User Story 4**: 48 tasks (Authentication - frontend + backend)
 - **User Story 5**: 20 tasks (Material UI)
-- **Polish Phase**: 22 tasks (Cross-cutting concerns) - updated from 20
+- **Polish Phase**: 24 tasks (Cross-cutting concerns, including T213 and T214)
 
 **Parallel Opportunities**: 
 - Setup: 5 parallel tasks
@@ -528,7 +552,7 @@ With multiple developers:
 - US4: 20+ parallel tasks (services, components, handlers)
 - US5: 5 parallel tasks (Material components)
 
-**MVP Scope**: Phases 1-3 (Setup + Foundational + User Story 1) = 94 tasks
+**MVP Scope**: Phases 1-3 (Setup + Foundational + User Story 1) = 96 tasks
 - Provides fully documented repository with all shared infrastructure
 - Ready for feature development to begin
 
