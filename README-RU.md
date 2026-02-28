@@ -12,9 +12,9 @@ Supabase используется как база данных и провайд
 | Бэкенд | Go 1.21+ · Gin · gin-contrib/sessions · gin-contrib/cors |
 | Провайдер аутентификации | Supabase (только через Go-бэкенд) |
 | Хранение сессий | Подписанный HTTP-Only cookie (на стороне сервера, 7 дней) |
-| CSRF-защита | Double-submit токен, хранящийся в сессии |
+| CSRF-защита | Synchronizer token pattern (CSRF-токен в серверной сессии + заголовок `X-CSRF-Token`) |
 | Менеджер пакетов | PNPM workspaces |
-| i18n | ngx-translate |
+| i18n | пока не реализовано (планируется: ngx-translate) |
 
 ## Архитектура
 

@@ -12,9 +12,9 @@ The frontend never communicates with Supabase directly.
 | Backend | Go 1.21+ · Gin · gin-contrib/sessions · gin-contrib/cors |
 | Auth provider | Supabase (via Go backend only) |
 | Session storage | Signed HTTP-Only cookie (server-side, 7 days) |
-| CSRF protection | Double-submit token stored in session |
+| CSRF protection | Synchronizer token pattern (CSRF token stored in session) |
 | Package manager | PNPM workspaces |
-| i18n | ngx-translate |
+| i18n | Not yet implemented (planned: ngx-translate) |
 
 ## Architecture
 

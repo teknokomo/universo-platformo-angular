@@ -126,8 +126,8 @@ interface OnboardingData {
                                                 role="checkbox"
                                                 [attr.aria-checked]="item.selected"
                                                 tabindex="0"
-                                                (keyup.enter)="toggleItem('projects', item)"
-                                                (keyup.space)="toggleItem('projects', item)"
+                                                (keydown.enter)="toggleItem('projects', item)"
+                                                (keydown.space)="$event.preventDefault(); toggleItem('projects', item)"
                                             >
                                                 <mat-icon>{{ item.selected ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
                                                 <span class="up-auth-page__item-title">{{ item.title }}</span>
@@ -167,8 +167,8 @@ interface OnboardingData {
                                                 role="checkbox"
                                                 [attr.aria-checked]="item.selected"
                                                 tabindex="0"
-                                                (keyup.enter)="toggleItem('campaigns', item)"
-                                                (keyup.space)="toggleItem('campaigns', item)"
+                                                (keydown.enter)="toggleItem('campaigns', item)"
+                                                (keydown.space)="$event.preventDefault(); toggleItem('campaigns', item)"
                                             >
                                                 <mat-icon>{{ item.selected ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
                                                 <span class="up-auth-page__item-title">{{ item.title }}</span>
@@ -207,8 +207,8 @@ interface OnboardingData {
                                                 role="checkbox"
                                                 [attr.aria-checked]="item.selected"
                                                 tabindex="0"
-                                                (keyup.enter)="toggleItem('clusters', item)"
-                                                (keyup.space)="toggleItem('clusters', item)"
+                                                (keydown.enter)="toggleItem('clusters', item)"
+                                                (keydown.space)="$event.preventDefault(); toggleItem('clusters', item)"
                                             >
                                                 <mat-icon>{{ item.selected ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
                                                 <span class="up-auth-page__item-title">{{ item.title }}</span>
