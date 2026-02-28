@@ -1,124 +1,132 @@
 # Universo Platformo Angular
 
-Implementation of Universo Platformo / Universo MMOOMM / Universo Kiberplano built on Angular (frontend) and Gin (backend) with TypeScript and Go.
+Implementation of **Universo Platformo** on **Angular** (frontend) and **Gin / Go** (backend) with TypeScript and Go.
+Supabase is used as the database and authentication provider — accessed **exclusively through the backend**.
+The frontend never communicates with Supabase directly.
 
-## 🏗️ Architecture: Modular Package-Based Monorepo
+## Technology Stack
 
-**CRITICAL**: This project follows a **strict modular architecture** where ALL functionality is implemented as independent packages in the `packages/` directory.
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Angular 17+ · TypeScript · Angular Material |
+| Backend | Go 1.21+ · Gin · gin-contrib/sessions · gin-contrib/cors |
+| Auth provider | Supabase (via Go backend only) |
+| Session storage | Signed HTTP-Only cookie (server-side, 7 days) |
+| CSRF protection | Synchronizer token pattern (CSRF token stored in session) |
+| Package manager | PNPM workspaces |
+| i18n | Not yet implemented (planned: ngx-translate) |
 
-### Package Structure
+## Architecture
+
+All features are implemented as **independent packages** in the `packages/` directory.
+Each package has a `base/` directory with the core implementation and bilingual README (EN + RU).
+Frontend packages use the `-frt` suffix; backend packages use the `-srv` suffix.
 
 ```
 packages/
-├── universo-types/          # Shared TypeScript types
-├── universo-utils/          # Shared utilities
-├── universo-api-client/     # API client libraries
-├── universo-i18n/          # Internationalization
-├── universo-rest-docs/     # API documentation
-├── universo-ng-components/ # Shared Angular components
-├── auth-frt/               # Authentication frontend (Angular)
-├── auth-srv/               # Authentication backend (Go/Gin)
-└── {feature}-frt/          # Feature frontends
-└── {feature}-srv/          # Feature backends
+├── auth-frt/base/    Angular authentication module (service, guards, components)
+├── auth-srv/base/    Go/Gin authentication server (Supabase proxy)
+└── start-frt/base/  Angular start pages (guest landing + onboarding wizard)
 ```
 
-### Why Modular Architecture?
+## How Supabase Integration Works
 
-This project is designed for **gradual evolution from monorepo to multi-repo**:
+```
+Browser (Angular)
+      │  HTTP (cookie session + CSRF token)
+      ▼
+Go/Gin auth-srv
+      │  HTTPS (apikey header)
+      ▼
+Supabase Auth API
+```
 
-1. **Phase 1 (Current)**: All packages as workspace packages in monorepo
-2. **Phase 2 (Future)**: Mature packages extracted to separate repositories  
-3. **Phase 3 (Long-term)**: Only base packages remain, features are independent
+The Angular frontend calls only `/api/v1/auth/*` endpoints on the Go backend.
+The Go backend holds the `SUPABASE_URL` and `SUPABASE_ANON_KEY` — never exposed to the browser.
+The backend proxies sign-in, sign-up, token refresh, and sign-out to Supabase on behalf of the user.
 
-**Every package MUST be designed to be repository-independent from day one.**
+## Implemented Packages
 
-## 🛠️ Technology Stack
+### `packages/auth-srv/base` — Go/Gin authentication backend
 
-- **Frontend**: Angular 17+ with TypeScript
-- **UI Library**: Angular Material
-- **Backend**: Gin framework with Go 1.20+
-- **Database**: Supabase (PostgreSQL-based)
-- **Authentication**: Go-based middleware with Supabase connector
-- **Package Manager**: PNPM with workspaces
-- **Build Tool**: Nx for monorepo orchestration
-- **Testing**: Jest (frontend), Go testing (backend), Playwright (E2E)
-- **i18n**: ngx-translate
+| Endpoint | Method | Auth | Description |
+|----------|--------|------|-------------|
+| `/api/v1/auth/csrf` | GET | — | Issue CSRF token for the session |
+| `/api/v1/auth/login` | POST | CSRF | Authenticate with email + password |
+| `/api/v1/auth/register` | POST | CSRF | Register a new account |
+| `/api/v1/auth/me` | GET | session | Return current user; auto-refresh token |
+| `/api/v1/auth/logout` | POST | CSRF | Invalidate session and Supabase token |
+| `/health` | GET | — | Liveness check |
 
-## 📦 Package Conventions
+Key implementation details:
+- Sessions stored server-side in a signed cookie (`gin-contrib/sessions`)
+- CSRF tokens generated with `crypto/rand`, validated per-request
+- Supabase tokens never reach the browser
+- Cookie `Secure` and `SameSite` configurable via environment variables
+- All Supabase HTTP calls use the request context for proper cancellation
 
-Every package follows these rules:
+### `packages/auth-frt/base` — Angular authentication frontend
 
-- **Naming**: `{feature}-frt` (frontend) or `{feature}-srv` (backend)
-- **Structure**: Each package contains a `base/` directory with core implementation
-- **Shared packages**: Use `universo-*` prefix
-- **Documentation**: Each package has bilingual README (English and Russian)
-- **Independence**: Packages expose well-defined interfaces for inter-package communication
+Provides reactive authentication state for the whole Angular application:
 
-## 🚀 Getting Started
+- **`AuthService`** — `BehaviorSubject`-based state (`user$`, `isAuthenticated$`, `loading$`)
+- **`authGuard`** / **`guestGuard`** — functional route guards (Angular 17+)
+- **`LoginFormComponent`** — Material email/password login form with validation
+- **`RegisterFormComponent`** — Registration form with password confirmation and legal checkboxes
+- **`AuthViewComponent`** — Tabbed card with login and registration forms
+
+### `packages/start-frt/base` — Angular start pages
+
+- **`StartPageComponent`** — Smart router: shows guest or authenticated view based on auth state
+- **`GuestStartPageComponent`** — Hero landing page with feature cards and CTA → `/auth`
+- **`AuthenticatedStartPageComponent`** — Three-step onboarding wizard (Projects → Campaigns → Clusters)
+- **`StartFooterComponent`** — Shared footer with privacy and terms links
+
+## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
-- Go 1.20+
-- PNPM 8+
+- Node.js 18+ and PNPM 8+
+- Go 1.21+
+- A [Supabase](https://supabase.com) project with email/password auth enabled
 
-### Installation
+### Backend setup
 
 ```bash
-# Install PNPM if not already installed
-npm install -g pnpm
-
-# Install dependencies
-pnpm install
-
-# Build all packages
-pnpm build
-
-# Run development servers
-pnpm dev
+cd packages/auth-srv/base
+cp .env.example .env
+# Fill in SUPABASE_URL, SUPABASE_ANON_KEY, SESSION_SECRET
+go run cmd/server/main.go
 ```
 
-## 📚 Documentation
+### Frontend setup
 
-- **Constitution**: `.specify/memory/constitution.md` - Project governance and architectural principles
-- **Best Practices**: `BEST-PRACTICES.md` / `BEST-PRACTICES-RU.md` - Angular and Gin technology stack best practices
-- **Specifications**: `specs/` - Feature specifications and implementation plans
-- **Package READMEs**: Each package has its own detailed documentation
+```bash
+pnpm install
+# Start your Angular application that imports @universo/auth-frt and @universo/start-frt
+```
 
-## 🌍 Bilingual Support
+## Security Notes
 
-All documentation in this project is maintained in both **English** and **Russian**:
-- English version is created first (authoritative)
-- Russian version is an exact translation with identical structure
+- Set `SECURE_COOKIE=true` in production (requires HTTPS)
+- Use a strong random `SESSION_SECRET` (≥ 32 characters)
+- The `SUPABASE_ANON_KEY` is only present on the backend — never in frontend bundles
+- CSRF tokens are regenerated per session and validated on every state-changing request
 
-## 🔗 Reference Implementation
+## Package Conventions
 
-This project adapts patterns from [Universo Platformo React](https://github.com/teknokomo/universo-platformo-react) to the Angular/Gin stack, following Angular and Go best practices rather than blindly copying implementation details.
+- **Naming**: `{feature}-frt` (Angular) or `{feature}-srv` (Go/Gin)
+- **Structure**: Each package has a `base/` directory with the implementation
+- **Docs**: Each package has bilingual `README.md` + `README-RU.md`
+- **Independence**: Packages expose well-defined public APIs for inter-package use
 
-## 📋 Development Workflow
+## Project Roadmap
 
-1. Review specifications in `specs/` directory
-2. Follow GitHub workflow guidelines in `.github/instructions/`
-3. Create Issues with bilingual descriptions
-4. Implement features as independent packages
-5. Submit Pull Requests following project conventions
+1. **Phase 1 (current)**: All packages as workspace packages in this monorepo
+2. **Phase 2**: Mature packages extracted to separate repositories
+3. **Phase 3**: Only infrastructure packages remain; features are fully independent
 
-## ⚠️ Critical Rules
+## License
 
-**FORBIDDEN PRACTICES** (will be rejected in code review):
-- ❌ Creating feature code outside `packages/` directory
-- ❌ Combining frontend and backend in a single package
-- ❌ Creating packages without `base/` directory
-- ❌ Tight coupling that prevents repository separation
+[Omsk Open License](https://github.com/teknokomo/universo-platformo-react)
 
-## 📄 License
-
-[License information to be added]
-
-## 🤝 Contributing
-
-Please read the contribution guidelines in `.github/instructions/` before submitting pull requests.
-
----
-
-**Architecture Version**: Constitution v1.0.4 | **Last Updated**: 2025-11-18
