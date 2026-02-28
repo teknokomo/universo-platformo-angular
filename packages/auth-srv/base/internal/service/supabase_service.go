@@ -192,6 +192,14 @@ func (s *SupabaseService) SignOut(ctx context.Context, accessToken string) error
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		body, _ := io.ReadAll(resp.Body)
+		if len(body) > 0 {
+			return fmt.Errorf("sign out failed: status %d, body: %s", resp.StatusCode, string(body))
+		}
+		return fmt.Errorf("sign out failed: status %d", resp.StatusCode)
+	}
+
 	return nil
 }
 

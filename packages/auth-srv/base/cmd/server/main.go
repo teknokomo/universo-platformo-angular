@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
+	"github.com/gin-contrib/sessions/memstore"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"universo-platformo/auth-srv/internal/config"
@@ -51,8 +51,10 @@ func main() {
 	// CORS middleware
 	router.Use(middleware.CORSMiddleware(cfg))
 
-	// Session middleware (cookie-based sessions)
-	store := cookie.NewStore([]byte(cfg.SessionSecret))
+	// Session middleware (server-side memory store — tokens never reach the client)
+	// NOTE: memstore does not survive server restarts (sessions will be lost).
+	// For production, consider a persistent store such as Redis.
+	store := memstore.NewStore([]byte(cfg.SessionSecret))
 	store.Options(sessions.Options{
 		Path:     "/",
 		MaxAge:   86400 * 7, // 7 days

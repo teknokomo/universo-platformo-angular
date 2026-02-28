@@ -12,8 +12,6 @@
         "@universo/auth-frt": "workspace:*",
         "@angular/material": "catalog:",
         "@angular/cdk": "catalog:",
-        "@ngx-translate/core": "catalog:",
-        "axios": "catalog:",
         "tslib": "catalog:"
     },
     "devDependencies": {

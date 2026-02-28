@@ -14,7 +14,6 @@ type Config struct {
 	SameSite      string
 	CookieName    string
 	SecureCookie  bool
-	DevSameOrigin bool
 }
 
 // Load reads configuration from environment variables
@@ -28,7 +27,6 @@ func Load() *Config {
 		SameSite:      getEnv("SAME_SITE", "lax"),
 		CookieName:    getEnv("SESSION_COOKIE_NAME", "up.session"),
 		SecureCookie:  getEnv("SECURE_COOKIE", "false") == "true",
-		DevSameOrigin: getEnv("DEV_SAME_ORIGIN", "false") == "true",
 	}
 }
 

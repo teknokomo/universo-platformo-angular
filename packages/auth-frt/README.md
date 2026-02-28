@@ -25,7 +25,6 @@ Angular authentication frontend module providing reactive auth state management 
 - **Register Form**: Registration form with password confirm and legal agreements
 - **Auth View**: Complete auth UI with tabbed login/register
 - **Cookie-based Sessions**: Secure session handling with CSRF protection
-- **Automatic Retry**: CSRF token refresh on 403 responses
 
 ## Installation
 

@@ -460,11 +460,21 @@ export class AuthenticatedStartPageComponent implements OnInit {
             .subscribe({
                 next: (data) => {
                     this.isOnboardingCompleted.set(data.onboardingCompleted);
+                    // Populate items from backend when available
+                    if (data.projects?.length) {
+                        this.projects.set(data.projects.map((p) => ({ ...p, selected: p.selected ?? false })));
+                    }
+                    if (data.campaigns?.length) {
+                        this.campaigns.set(data.campaigns.map((c) => ({ ...c, selected: c.selected ?? false })));
+                    }
+                    if (data.clusters?.length) {
+                        this.clusters.set(data.clusters.map((cl) => ({ ...cl, selected: cl.selected ?? false })));
+                    }
                     this.isLoading.set(false);
                 },
                 error: (err) => {
                     console.error('[AuthenticatedStartPage] Failed to check onboarding status:', err);
-                    // Default to showing wizard on error (intentional UX fallback)
+                    // Default to showing wizard with hardcoded items on error (intentional UX fallback)
                     this.isOnboardingCompleted.set(false);
                     this.isLoading.set(false);
                 },
