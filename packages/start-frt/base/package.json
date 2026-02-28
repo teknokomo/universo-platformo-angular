@@ -1,0 +1,47 @@
+{
+    "name": "@universo/start-frt",
+    "version": "0.1.0",
+    "description": "Start page frontend module for Angular - guest and authenticated start pages",
+    "peerDependencies": {
+        "@angular/common": ">=17",
+        "@angular/core": ">=17",
+        "@angular/router": ">=17",
+        "rxjs": ">=7"
+    },
+    "dependencies": {
+        "@universo/auth-frt": "workspace:*",
+        "@angular/material": "catalog:",
+        "@angular/cdk": "catalog:",
+        "@ngx-translate/core": "catalog:",
+        "axios": "catalog:",
+        "tslib": "catalog:"
+    },
+    "devDependencies": {
+        "@angular/animations": "catalog:",
+        "@angular/common": "catalog:",
+        "@angular/compiler": "catalog:",
+        "@angular/compiler-cli": "catalog:",
+        "@angular/core": "catalog:",
+        "@angular/forms": "catalog:",
+        "@angular/platform-browser": "catalog:",
+        "@angular/platform-browser-dynamic": "catalog:",
+        "@angular/router": "catalog:",
+        "rxjs": "catalog:",
+        "zone.js": "catalog:",
+        "typescript": "catalog:",
+        "eslint": "catalog:",
+        "@types/node": "catalog:"
+    },
+    "scripts": {
+        "lint": "eslint --ext .ts src/"
+    },
+    "keywords": [
+        "universo",
+        "start",
+        "onboarding",
+        "angular",
+        "frontend"
+    ],
+    "author": "Teknokomo",
+    "license": "Omsk Open License"
+}
