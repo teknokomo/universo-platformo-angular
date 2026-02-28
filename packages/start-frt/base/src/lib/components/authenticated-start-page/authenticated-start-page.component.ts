@@ -24,8 +24,6 @@ interface OnboardingData {
     clusters?: OnboardingItem[];
 }
 
-type WizardStep = 'projects' | 'campaigns' | 'clusters' | 'complete';
-
 /**
  * AuthenticatedStartPageComponent - Onboarding wizard for authenticated users
  *

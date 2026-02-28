@@ -10,8 +10,10 @@ type LoginRequest struct {
 type RegisterRequest struct {
 	Email           string `json:"email" binding:"required,email,max=320"`
 	Password        string `json:"password" binding:"required,min=6,max=1024"`
-	TermsAccepted   bool   `json:"termsAccepted" binding:"required"`
-	PrivacyAccepted bool   `json:"privacyAccepted" binding:"required"`
+	// TermsAccepted and PrivacyAccepted are validated manually in the handler
+	// because gin's "required" tag rejects false (non-zero check), not a missing field check
+	TermsAccepted   bool `json:"termsAccepted"`
+	PrivacyAccepted bool `json:"privacyAccepted"`
 }
 
 // AuthUser represents an authenticated user

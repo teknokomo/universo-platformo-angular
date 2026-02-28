@@ -62,7 +62,7 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	authResp, err := h.supabase.SignIn(req.Email, req.Password)
+	authResp, err := h.supabase.SignIn(c.Request.Context(), req.Email, req.Password)
 	if err != nil {
 		log.Printf("[auth] Login failed for %s: %v", req.Email, err)
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
@@ -121,7 +121,7 @@ func (h *AuthHandler) Register(c *gin.Context) {
 		return
 	}
 
-	authResp, err := h.supabase.SignUp(req.Email, req.Password)
+	authResp, err := h.supabase.SignUp(c.Request.Context(), req.Email, req.Password)
 	if err != nil {
 		log.Printf("[auth] Register failed for %s: %v", req.Email, err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Registration failed"})
@@ -160,7 +160,7 @@ func (h *AuthHandler) GetMe(c *gin.Context) {
 		if err := json.Unmarshal([]byte(tokensRaw), &tokens); err == nil {
 			// Refresh if less than 2 minutes to expiry
 			if tokens.ExpiresAt-time.Now().Unix() < 120 && tokens.RefreshToken != "" {
-				newAuth, err := h.supabase.RefreshToken(tokens.RefreshToken)
+				newAuth, err := h.supabase.RefreshToken(c.Request.Context(), tokens.RefreshToken)
 				if err != nil {
 					log.Printf("[auth] Token refresh failed: %v", err)
 					// Session expired - clear and return 401
@@ -184,7 +184,11 @@ func (h *AuthHandler) GetMe(c *gin.Context) {
 					session.Set(middleware.SessionKeyUser, string(newUserJSON))
 					userRaw = string(newUserJSON)
 				}
-				_ = session.Save()
+				if err := session.Save(); err != nil {
+					log.Printf("[auth] Failed to save refreshed session: %v", err)
+					c.JSON(http.StatusInternalServerError, gin.H{"error": "Server error"})
+					return
+				}
 			}
 		}
 	}
@@ -209,7 +213,7 @@ func (h *AuthHandler) Logout(c *gin.Context) {
 	if tokensRaw != "" {
 		var tokens model.SessionTokens
 		if err := json.Unmarshal([]byte(tokensRaw), &tokens); err == nil && tokens.AccessToken != "" {
-			if err := h.supabase.SignOut(tokens.AccessToken); err != nil {
+			if err := h.supabase.SignOut(c.Request.Context(), tokens.AccessToken); err != nil {
 				log.Printf("[auth] Supabase signout failed (proceeding with local logout): %v", err)
 			}
 		}

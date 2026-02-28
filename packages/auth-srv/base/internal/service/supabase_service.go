@@ -2,6 +2,7 @@ package service
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -28,7 +29,7 @@ func NewSupabaseService(supabaseURL, supabaseKey string) *SupabaseService {
 }
 
 // SignIn authenticates a user with email and password
-func (s *SupabaseService) SignIn(email, password string) (*model.SupabaseAuthResponse, error) {
+func (s *SupabaseService) SignIn(ctx context.Context, email, password string) (*model.SupabaseAuthResponse, error) {
 	payload := map[string]string{
 		"email":    email,
 		"password": password,
@@ -38,7 +39,7 @@ func (s *SupabaseService) SignIn(email, password string) (*model.SupabaseAuthRes
 		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
 
-	req, err := http.NewRequest("POST", s.supabaseURL+"/auth/v1/token?grant_type=password", bytes.NewBuffer(body))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, s.supabaseURL+"/auth/v1/token?grant_type=password", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -72,7 +73,7 @@ func (s *SupabaseService) SignIn(email, password string) (*model.SupabaseAuthRes
 }
 
 // SignUp registers a new user with email and password
-func (s *SupabaseService) SignUp(email, password string) (*model.SupabaseAuthResponse, error) {
+func (s *SupabaseService) SignUp(ctx context.Context, email, password string) (*model.SupabaseAuthResponse, error) {
 	payload := map[string]string{
 		"email":    email,
 		"password": password,
@@ -82,7 +83,7 @@ func (s *SupabaseService) SignUp(email, password string) (*model.SupabaseAuthRes
 		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
 
-	req, err := http.NewRequest("POST", s.supabaseURL+"/auth/v1/signup", bytes.NewBuffer(body))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, s.supabaseURL+"/auth/v1/signup", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -116,8 +117,8 @@ func (s *SupabaseService) SignUp(email, password string) (*model.SupabaseAuthRes
 }
 
 // GetUser retrieves user info using an access token
-func (s *SupabaseService) GetUser(accessToken string) (*model.SupabaseUser, error) {
-	req, err := http.NewRequest("GET", s.supabaseURL+"/auth/v1/user", nil)
+func (s *SupabaseService) GetUser(ctx context.Context, accessToken string) (*model.SupabaseUser, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, s.supabaseURL+"/auth/v1/user", nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -143,7 +144,7 @@ func (s *SupabaseService) GetUser(accessToken string) (*model.SupabaseUser, erro
 }
 
 // RefreshToken refreshes a Supabase session using a refresh token
-func (s *SupabaseService) RefreshToken(refreshToken string) (*model.SupabaseAuthResponse, error) {
+func (s *SupabaseService) RefreshToken(ctx context.Context, refreshToken string) (*model.SupabaseAuthResponse, error) {
 	payload := map[string]string{
 		"refresh_token": refreshToken,
 	}
@@ -152,7 +153,7 @@ func (s *SupabaseService) RefreshToken(refreshToken string) (*model.SupabaseAuth
 		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
 
-	req, err := http.NewRequest("POST", s.supabaseURL+"/auth/v1/token?grant_type=refresh_token", bytes.NewBuffer(body))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, s.supabaseURL+"/auth/v1/token?grant_type=refresh_token", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -177,8 +178,8 @@ func (s *SupabaseService) RefreshToken(refreshToken string) (*model.SupabaseAuth
 }
 
 // SignOut invalidates a Supabase session
-func (s *SupabaseService) SignOut(accessToken string) error {
-	req, err := http.NewRequest("POST", s.supabaseURL+"/auth/v1/logout", nil)
+func (s *SupabaseService) SignOut(ctx context.Context, accessToken string) error {
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, s.supabaseURL+"/auth/v1/logout", nil)
 	if err != nil {
 		return fmt.Errorf("failed to create request: %w", err)
 	}

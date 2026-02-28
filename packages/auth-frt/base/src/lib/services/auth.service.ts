@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, from, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { map, tap, catchError, switchMap, finalize } from 'rxjs/operators';
 import type { AuthUser, AuthState, LoginCredentials, RegisterCredentials } from '../models/auth.models';
 

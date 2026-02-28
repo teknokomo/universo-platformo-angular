@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
@@ -13,6 +14,18 @@ import (
 	"universo-platformo/auth-srv/internal/middleware"
 	"universo-platformo/auth-srv/internal/service"
 )
+
+// parseSameSite converts a string config value to http.SameSite
+func parseSameSite(s string) http.SameSite {
+	switch strings.ToLower(strings.TrimSpace(s)) {
+	case "strict":
+		return http.SameSiteStrictMode
+	case "none":
+		return http.SameSiteNoneMode
+	default:
+		return http.SameSiteLaxMode
+	}
+}
 
 func main() {
 	// Load environment variables from .env file (if present)
@@ -44,8 +57,8 @@ func main() {
 		Path:     "/",
 		MaxAge:   86400 * 7, // 7 days
 		HttpOnly: true,
-		Secure:   false, // Set to true in production with HTTPS
-		SameSite: http.SameSiteLaxMode,
+		Secure:   cfg.SecureCookie,
+		SameSite: parseSameSite(cfg.SameSite),
 	})
 	router.Use(sessions.Sessions(cfg.CookieName, store))
 

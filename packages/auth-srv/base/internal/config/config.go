@@ -13,6 +13,7 @@ type Config struct {
 	AllowOrigins  string
 	SameSite      string
 	CookieName    string
+	SecureCookie  bool
 	DevSameOrigin bool
 }
 
@@ -26,6 +27,7 @@ func Load() *Config {
 		AllowOrigins:  getEnv("ALLOW_ORIGINS", "http://localhost:4200"),
 		SameSite:      getEnv("SAME_SITE", "lax"),
 		CookieName:    getEnv("SESSION_COOKIE_NAME", "up.session"),
+		SecureCookie:  getEnv("SECURE_COOKIE", "false") == "true",
 		DevSameOrigin: getEnv("DEV_SAME_ORIGIN", "false") == "true",
 	}
 }
