@@ -472,13 +472,13 @@ export class AuthenticatedStartPageComponent implements OnInit {
     }
 
     toggleItem(signalRef: 'projects' | 'campaigns' | 'clusters', item: OnboardingItem): void {
-        const signal = this[signalRef];
-        const items = signal();
+        const sig = this[signalRef];
+        const items = sig();
         const idx = items.findIndex((i) => i.id === item.id);
         if (idx !== -1) {
             const updated = [...items];
             updated[idx] = { ...updated[idx], selected: !updated[idx].selected };
-            signal.set(updated);
+            sig.set(updated);
         }
     }
 

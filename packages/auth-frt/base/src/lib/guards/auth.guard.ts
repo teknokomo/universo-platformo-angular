@@ -1,12 +1,13 @@
 import { inject } from '@angular/core';
 import { Router, CanActivateFn, UrlTree } from '@angular/router';
-import { Observable, map, take } from 'rxjs';
+import { Observable, filter, map, take } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 /**
  * authGuard - functional route guard that protects authenticated routes
  *
- * Redirects to /auth if the user is not authenticated.
+ * Waits for the initial auth check to complete, then redirects to /auth
+ * if the user is not authenticated.
  *
  * @example
  * ```typescript
@@ -23,16 +24,9 @@ export const authGuard: CanActivateFn = (): Observable<boolean | UrlTree> => {
     const router = inject(Router);
 
     return authService.state$.pipe(
-        // Wait until loading is complete
-        map((state) => {
-            if (state.loading) {
-                return true; // Allow navigation while loading (will re-evaluate)
-            }
-            if (state.isAuthenticated) {
-                return true;
-            }
-            return router.createUrlTree(['/auth']);
-        }),
+        // Wait until the initial session check is complete before deciding
+        filter((state) => !state.loading),
+        map((state) => state.isAuthenticated ? true : router.createUrlTree(['/auth'])),
         take(1)
     );
 };
@@ -40,7 +34,8 @@ export const authGuard: CanActivateFn = (): Observable<boolean | UrlTree> => {
 /**
  * guestGuard - functional route guard that protects guest-only routes
  *
- * Redirects to / if the user is already authenticated.
+ * Waits for the initial auth check to complete, then redirects to /
+ * if the user is already authenticated.
  *
  * @example
  * ```typescript
@@ -57,15 +52,8 @@ export const guestGuard: CanActivateFn = (): Observable<boolean | UrlTree> => {
     const router = inject(Router);
 
     return authService.state$.pipe(
-        map((state) => {
-            if (state.loading) {
-                return true;
-            }
-            if (!state.isAuthenticated) {
-                return true;
-            }
-            return router.createUrlTree(['/']);
-        }),
+        filter((state) => !state.loading),
+        map((state) => !state.isAuthenticated ? true : router.createUrlTree(['/'])),
         take(1)
     );
 };
